@@ -1,6 +1,6 @@
 # Autotag
 
-Outputs: tag - empty if no tag is created.
+This action will read a `package.json` file found in the project root
 
 ## Usage
 
@@ -52,6 +52,17 @@ The action will automatically extract the token at runtime. **DO NOT MANUALLY EN
 
 There are several options to customize how the tag is created.
 
+1. `package_root`
+    
+    By default, autotag will look for the `package.json` file in the project root. If the file is located in a subdirectory, this option an be used to point to the correct file.
+    
+    ```yaml
+    - uses: butlerlogic/action-autotag@1.0.0
+      with:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        package_root: "/path/to/subdirectory"
+    ```
+    
 1. `tag_prefx`
     
     By default, `package.json` uses [semantic versioning](https://semver.org/), such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefx` is set to `v`, then the tag would be labeled as `v1.0.0`.
