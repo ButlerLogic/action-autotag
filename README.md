@@ -1,6 +1,6 @@
 # Autotag
 
-This action will read a `package.json` file found in the project root
+This action will read a `package.json` file and compare the `version` attribute to the project's known tags. If a corresponding tag does not exist, it will be created.
 
 ## Usage
 
