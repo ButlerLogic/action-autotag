@@ -1,10 +1,12 @@
-name: 'Node 12 Template Action'
-description: 'Get started with Node actions'
-author: 'GitHub'
-inputs:
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+name: 'Autotag'
+description: 'Automatically generate new tags when the package.json version changes.'
+author: 'ButlerLogic'
+branding:
+  icon: 'tag'  
+  color: 'black'
+outputs:
+  tag:
+    description: Returns the new tag value. Empty if a tag is not created.
 runs:
   using: 'node12'
   main: 'lib/main.js'
