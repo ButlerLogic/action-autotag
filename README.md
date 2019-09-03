@@ -108,7 +108,13 @@ If you are building an action that runs after this one, be aware this action pro
 
 ---
 
-This action was written and is primarily maintained by [Corey Butler](https://github.com/coreybutler). If you use this or find value, please consider contributing in one or more of the following ways:
+## Credits
+
+This action was written and is primarily maintained by [Corey Butler](https://github.com/coreybutler).
+
+## Our Ask...
+
+If you use this or find value in it, please consider contributing in one or more of the following ways:
 
 1. Click the "Sponsor" button at the top of the page.
 1. Star it!
