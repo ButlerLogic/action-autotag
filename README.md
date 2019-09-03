@@ -112,7 +112,7 @@ If you are building an action that runs after this one, be aware this action pro
 
 This action was written and is primarily maintained by [Corey Butler](https://github.com/coreybutler).
 
-## Our Ask...
+# Our Ask...
 
 If you use this or find value in it, please consider contributing in one or more of the following ways:
 
