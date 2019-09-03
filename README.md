@@ -7,7 +7,7 @@ This action will read a `package.json` file and compare the `version` attribute 
 The following is an example `.github/main.workflow` that will execute when a `push` to the `master` branch occurs. 
 
 ```yaml
-name: Node CI
+name: My Workflow
 
 on: 
   push:
@@ -22,7 +22,6 @@ jobs:
     - uses: butlerlogic/action-autotag@1.0.0
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
 ```
 
 To make this work, the workflow must have the checkout action _before_ the autotag action.
