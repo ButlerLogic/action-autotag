@@ -1,4 +1,4 @@
-name: 'Autotagger'
+name: 'Autotag'
 description: 'Automatically generate new tags when the package.json version changes.'
 author: 'ButlerLogic'
 branding:
