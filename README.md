@@ -104,4 +104,5 @@ If you are building an action that runs after this one, be aware this action pro
 1. `tagname` will be empty if no tag was created, or it will be the value of the new tag.
 1. `tagsha`: The SHA of the new tag.
 1. `taguri`: The URI/URL of the new tag reference.
+1. `tagmessage`: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
 1. `version` will be the version attribute found in the `package.json` file.
