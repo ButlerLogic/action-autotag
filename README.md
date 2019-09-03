@@ -118,7 +118,7 @@ If you use this or find value in it, please consider contributing in one or more
 
 1. Click the "Sponsor" button at the top of the page.
 1. Star it!
-1. [Tweet](https://twitter.com/intent/tweet?hashtags=github,actions&original_referer=http%3A%2F%2F127.0.0.1%3A91%2F&text=I%20am%20automating%20my%20workflow%20with%20the%20Autotag%20Github%20action!&tw_p=tweetbutton&url=http%3A%2F%2Fgithub.com%2Fbutlerlogic%2Faction-autotag&via=goldglovecb)
+1. [Tweet about it!](https://twitter.com/intent/tweet?hashtags=github,actions&original_referer=http%3A%2F%2F127.0.0.1%3A91%2F&text=I%20am%20automating%20my%20workflow%20with%20the%20Autotag%20Github%20action!&tw_p=tweetbutton&url=http%3A%2F%2Fgithub.com%2Fbutlerlogic%2Faction-autotag&via=goldglovecb)
 1. Fix an issue.
 1. Add a feature (post a proposal in an issue first!).
 
