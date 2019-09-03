@@ -1,6 +1,6 @@
 {
   "name": "autotag-action",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "description": "Automatically create a tag whenever the version changes in package.json",
   "main": "lib/main.js",

@@ -4,9 +4,31 @@ author: 'ButlerLogic'
 branding:
   icon: 'tag'  
   color: 'black'
+inputs:
+  package_root:
+    description: Autotag will look for the package.json file in in this location.
+    required: false
+    default: './'
+  tag_prefx:
+    description: By default, package.json uses semantic versioning, such as "1.0.0". A prefix can be used to add text before the tag name. For example, if tag_prefx is set to "v", then the tag would be labeled as "v1.0.0".
+    required: false
+  tag_suffix:
+    description: Text which is applied to the end of the tag.
+    required: false
+  tag_message:
+    description: This is the annotated commit message associated with the tag. By default, a changelog will be generated from the commits between the latest tag and the new tag (HEAD). This will override that with a hard-coded message.
+    required: false
 outputs:
-  tag:
+  tagname:
     description: Returns the new tag value. Empty if a tag is not created.
+  tagsha:
+    description: The SHA of the new tag.
+  taguri:
+    description: The URI/URL of the new tag reference.
+  tagmessage:
+    description: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
+  version:
+    description: The version, as defined in package.json.
 runs:
   using: 'node12'
   main: 'lib/main.js'
