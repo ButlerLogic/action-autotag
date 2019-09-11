@@ -66,15 +66,15 @@ async function run() {
 
     let reference
     try {
-      reference = await git.git.createRef({owner, repo, ref: `refs/tags/${newTag.data.tag}`, sha: newTag.data.sha})
+      reference = await git.git.createRef({owner, repo, ref: `refs/tags/${tag.data.tag}`, sha: tag.data.sha})
       core.warning(`Reference ${reference.data.ref} available at ${reference.data.url}`)
     } catch (e) {
-      core.warning({owner, repo, ref: `refs/tags/${newTag.data.tag}`, sha: newTag.data.sha})
+      core.warning({owner, repo, ref: `refs/tags/${tag.data.tag}`, sha: tag.data.sha})
       core.setFailed(e.message)
       return
     }
 
-    if (typeof newTag === 'object' && typeof reference === 'object') {
+    if (typeof tag === 'object' && typeof reference === 'object') {
       core.setOutput('tagname', name)
       core.setOutput('tagsha', tag.data.sha)
       core.setOutput('taguri', reference.data.url)
