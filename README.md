@@ -1,4 +1,5 @@
 # General AutoTag :bookmark_tabs:
+[![](https://img.shields.io/npm/v/general-autotag.svg)](https://www.npmjs.com/package/general-autotag) [![](https://github.com/jaliborc/pettracker/workflows/tag/badge.svg)](https://github.com/jaliborc/pettracker/workflows/) ![](https://david-dm.org/jaliborc/general-autotag.svg) ![](https://img.shields.io/npm/l/general-autotag.svg)
 
 This action will read a chosen source file and extract the current version from it. It will then compare it to the project's known tags and, if a corresponding tag does not exist, it will be created.
 
