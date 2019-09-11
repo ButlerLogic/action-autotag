@@ -11,6 +11,7 @@ async function run() {
       return core.setFailed(`source file ${fileName} does not exist.`)
 
     let content = fs.readFileSync(filePath)
+    core.warning(content)
     let regex = new RegExp(core.getInput('extraction_regex'))
     let matches = content.match(regex)
     if (!matches)
