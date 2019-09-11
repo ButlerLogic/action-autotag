@@ -3,15 +3,13 @@
   "version": "1.0.0",
   "description": "Automatically generate new tags by extracting their names from a given source file",
   "main": "main.js",
-  "scripts": {
-    "test": "jest"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jaliborc/action-general-autotag.git"
+    "url": "git+https://github.com/jaliborc/action-general-autotag.git"
   },
   "keywords": [
     "actions",
+    "github",
     "node",
     "setup"
   ],
