@@ -1,6 +1,6 @@
-name: 'Generalized Automatic Tags'
+name: 'Automatic Tags'
 description: 'Automatically generate new tags by extracting their names from a given source file.'
-author: 'Jaliborc'
+author: 'ButlerLogic, Jaliborc'
 branding:
   icon: 'tag'
   color: 'orange'
