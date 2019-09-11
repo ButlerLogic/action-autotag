@@ -1,4 +1,4 @@
-# General AutoTag
+# General AutoTag :bookmark_tabs:
 
 This action will read a chosen source file and extract the current version from it. It will then compare it to the project's known tags and, if a corresponding tag does not exist, it will be created.
 
@@ -58,8 +58,6 @@ The action will automatically extract the github token at runtime. **DO NOT MANU
 
 ### Optional
 There are a few options to customize how the tag is created.
-
-    ```
 
 1. `tag_format`
 
