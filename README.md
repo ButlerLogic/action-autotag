@@ -2,7 +2,7 @@
 
 This action will read a chosen source file and extract the current version from it. It will then compare it to the project's known tags and, if a corresponding tag does not exist, it will be created.
 
-Forked from , which worked specifically with Node projects. This approach is more flexible and works with different programming languages.
+Forked from [Autotag](https://github.com/ButlerLogic/action-autotag), which worked specifically with Node projects. This approach is more flexible and works with different programming languages.
 
 ## Usage
 
