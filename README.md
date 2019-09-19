@@ -53,7 +53,7 @@ There are several options to customize how the tag is created.
 
 1. `package_root`
     
-    By default, autotag will look for the `package.json` file in the project root. If the file is located in a subdirectory, this option an be used to point to the correct file.
+    By default, autotag will look for the `package.json` file in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
     
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
@@ -87,7 +87,7 @@ There are several options to customize how the tag is created.
 1. `tag_message`
     
     This is the annotated commit message associated with the tag. By default, a
-    changelog will be generated from the commits between the latest tag and the new tag (HEAD). This will override that with a hard-coded message.
+    changelog will be generated from the commits between the latest tag and the new tag (HEAD). Setting this option will override it witha custom message.
     
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
