@@ -4,12 +4,12 @@ This action will read a `package.json` file and compare the `version` attribute 
 
 ## Usage
 
-The following is an example `.github/main.workflow` that will execute when a `push` to the `master` branch occurs. 
+The following is an example `.github/main.workflow` that will execute when a `push` to the `master` branch occurs.
 
 ```yaml
 name: My Workflow
 
-on: 
+on:
   push:
     branches:
     - master
@@ -52,48 +52,60 @@ The action will automatically extract the token at runtime. **DO NOT MANUALLY EN
 There are several options to customize how the tag is created.
 
 1. `package_root`
-    
+
     By default, autotag will look for the `package.json` file in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
-    
+
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         package_root: "/path/to/subdirectory"
     ```
-    
+
 1. `tag_prefx`
-    
+
     By default, `package.json` uses [semantic versioning](https://semver.org/), such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefx` is set to `v`, then the tag would be labeled as `v1.0.0`.
-    
+
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         tag_prefx: "v"
     ```
-    
+
 1. `tag_suffix`
-    
+
     Text can also be applied to the end of the tag by setting `tag_suffix`. For example, if `tag_suffix` is ` (beta)`, the tag would be `1.0.0 (beta)`. Please note this example violates semantic versioning and is merely here to illustrate how to add text to the end of a tag name if you _really_ want to.
-    
+
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         tag_suffix: " (beta)"
     ```
-    
+
 1. `tag_message`
-    
+
     This is the annotated commit message associated with the tag. By default, a
     changelog will be generated from the commits between the latest tag and the new tag (HEAD). Setting this option will override it witha custom message.
-    
+
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         tag_message: "Custom message goes here."
+    ```
+
+1. `version`
+
+    Explicitly set the version instead of automatically detecting from `package.json`.
+    Useful for non-JavaScript projects where version may be output by a previous action.
+
+    ```yaml
+    - uses: butlerlogic/action-autotag@1.0.0
+      with:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        version: "${{ steps.previous_step.outputs.version }}"
     ```
 
 ## Developer Notes
