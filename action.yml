@@ -1,9 +1,9 @@
-name: 'Autotagger'
-description: 'Automatically generate new tags when the package.json version changes.'
-author: 'ButlerLogic'
+name: "Autotagger"
+description: "Automatically generate new tags when the package.json version changes."
+author: "ButlerLogic"
 branding:
-  icon: 'tag'
-  color: 'black'
+  icon: "tag"
+  color: "black"
 inputs:
   package_root:
     description: Autotag will look for the package.json file in in this location.
@@ -18,6 +18,9 @@ inputs:
   tag_message:
     description: This is the annotated commit message associated with the tag. By default, a changelog will be generated from the commits between the latest tag and the new tag (HEAD). This will override that with a hard-coded message.
     required: false
+  version:
+    description: Explicitly set the version here instead of automatically detecting from `package.json`. Useful for non-JavaScript projects where version may be output by a previous action.
+    required: false
 outputs:
   tagname:
     description: Returns the new tag value. Empty if a tag is not created.
@@ -28,7 +31,7 @@ outputs:
   tagmessage:
     description: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
   version:
-    description: The version, as defined in package.json.
+    description: The version, as defined in package.json or explicitly set in the input.
 runs:
-  using: 'node12'
-  main: 'lib/main.js'
+  using: "node12"
+  main: "lib/main.js"
