@@ -45,7 +45,7 @@ The `GITHUB_TOKEN` must be passed in. Without this, it is not possible to create
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
 
-The action will automatically extract the token at runtime. **DO NOT MANUALLY ENTER YOUR TOKEN.** If you put the actual token in your workflow file, you're make it accessible in plaintext to anyone who ever views the repository (it wil be in your git history).
+The action will automatically extract the token at runtime. **DO NOT MANUALLY ENTER YOUR TOKEN.** If you put the actual token in your workflow file, you'll make it accessible (in plaintext) to anyone who ever views the repository (it will be in your git history).
 
 ### Optional Configurations
 
