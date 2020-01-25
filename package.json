@@ -16,7 +16,6 @@
     "node",
     "setup"
   ],
-  "type": "module",
   "author": "ButlerLogic",
   "license": "MIT",
   "dependencies": {
