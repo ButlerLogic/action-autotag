@@ -4,15 +4,15 @@ This action will read a `package.json` file and compare the `version` attribute 
 
 ## Usage
 
-The following is an example `.github/main.workflow` that will execute when a `push` to the `master` branch occurs.
+The following is an example `.github/workflows/main.yml` that will execute when a `push` to the `master` branch occurs.
 
 ```yaml
-name: My Workflow
+name: Create Tag
 
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build:
@@ -29,8 +29,8 @@ To make this work, the workflow must have the checkout action _before_ the autot
 This **order** is important!
 
 ```yaml
-- uses: actions/checkout@master
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: actions/checkout@v2
+- uses: butlerlogic/action-autotag@stable
 ```
 
 > If the repository is not checked out first, the autotagger cannot find the package.json file.
@@ -40,7 +40,7 @@ This **order** is important!
 The `GITHUB_TOKEN` must be passed in. Without this, it is not possible to create a new tag. Make sure the autotag action looks like the following example:
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: butlerlogic/action-autotag@stable
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
