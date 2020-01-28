@@ -17,8 +17,8 @@
   "author": "Author.io",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.0.0",
-    "@actions/github": "^1.0.0",
+    "@actions/core": "^1.2.2",
+    "@actions/github": "^2.1.0",
     "globby": "^11.0.0",
     "semver": "^7.1.1"
   }
