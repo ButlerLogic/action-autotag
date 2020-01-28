@@ -14,3 +14,4 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 !.gitignore
 !.github
 _*
+node_modules

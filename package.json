@@ -1,25 +1,25 @@
 {
-  "name": "autotag-action",
-  "version": "1.0.2",
+  "name": "multipublish-action",
+  "version": "1.0.0-beta.1",
   "private": true,
-  "description": "Automatically create a tag whenever the version changes in package.json",
+  "description": "Automatically publish JavaScript modules to a registry (like the npm registry). The code base is scanned for JavaScript modules, each of which is published to the specified registry (default is npm). Respects .npmrc files if present in the module's root directory.",
   "main": "lib/main.js",
-  "scripts": {
-    "test": "jest"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/butlerlogic/action-autotag.git"
+    "url": "git+https://github.com/author/action-multipublish.git"
   },
   "keywords": [
     "actions",
+    "javascript",
     "node",
-    "setup"
+    "publish"
   ],
-  "author": "ButlerLogic",
+  "author": "Author.io",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.0.0",
-    "@actions/github": "^1.0.0"
+    "@actions/github": "^1.0.0",
+    "globby": "^11.0.0",
+    "semver": "^7.1.1"
   }
 }

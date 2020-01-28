@@ -1,0 +1,12 @@
+name: Debugging
+
+on: [push]
+
+job:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        uses: author/action-publish@master
+        with:
+          REGISTRY_TOKEN: "test"
