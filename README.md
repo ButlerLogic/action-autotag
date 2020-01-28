@@ -69,9 +69,7 @@ There are several options to customize how the tag is created.
     ```yaml
     - uses: author/action-multipublish@1.0.0
       with:
-        scan: 
-        - ".browser_dist",
-        - ".node_dist"
+        scan: ".browser_dist, .node_dist"
         REGISTRY_TOKEN: "${{ secrets.REGISTRY_TOKEN }}"
     ```
 
