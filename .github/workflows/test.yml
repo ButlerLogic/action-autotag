@@ -8,9 +8,8 @@ jobs:
     steps:
       - name: Test
         uses: author/action-publish@master
-        run: ls
         with:
-          scan: "./"
+          scan: "./,../"
           ACTIONS_STEP_DEBUG: true
         env:
           REGISTRY_TOKEN: test
