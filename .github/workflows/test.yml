@@ -8,6 +8,6 @@ jobs:
     steps:
       - name: Test
         uses: author/action-publish@master
-        with:
+        env:
           REGISTRY_TOKEN: test
           ACTIONS_STEP_DEBUG: true
