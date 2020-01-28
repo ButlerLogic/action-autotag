@@ -19,7 +19,7 @@ This action serves as the last step of a multi-phase deployment process:
 
 To get this, [login to your npm account](https://www.npmjs.com/login) and find/create a token:
 
-<img src="https://docs.npmjs.com/assets/images/integrations/tokens-profile.png" style="max-height: 200px;"/>
+<img src="https://docs.npmjs.com/assets/images/integrations/tokens-profile.png" height="200px"/>
 
 Additional instructions are available [here](https://docs.npmjs.com/creating-and-viewing-authentication-tokens).
 
