@@ -1,16 +1,19 @@
-name: Multipublish
-description: Automatically publish JavaScript modules to a registry (like the npm registry). The code base is scanned for JavaScript modules, each of which is published to the specified registry (default is npm). Respects .npmrc files if present in the module's root directory.
+name: Publish
+description: Automatically publish JS modules (supports multiple modules, respects .npmrc)
 author: Author.io
 branding:
   icon: box
   color: red
 inputs:
   scan:
-    description: Optional. Specify which directories (relative to the root) should be scanned for modules. Comma separated.
+    description: Optional. Specify which directories (relative to the root) should be scanned for modules. Comma separated, supports glob syntax.
     required: false
-    default: ./
-  version:
-    description: Only publish modules matching this version.
+    default: "./"
+  ignore:
+    description: Optional. Prevent specific directories. Comma-separated, supports glob syntax.
+    required: false
+  force:
+    description: Optional. Force a private module to be published (see limitations in README)
     required: false
 runs:
   using: "node12"
