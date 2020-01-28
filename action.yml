@@ -1,4 +1,4 @@
-name: Publish
+name: MultiPublish
 description: Automatically publish JS modules (supports multiple modules, respects .npmrc)
 author: Author.io
 branding:
