@@ -9,7 +9,7 @@ jobs:
       - name: Test
         uses: author/action-publish@master
         with:
-          scan: "./"
+          scan: "./, ../../"
           ACTIONS_STEP_DEBUG: true
         env:
           REGISTRY_TOKEN: test
