@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: Test
         uses: author/action-publish@master
+        run: ls
         with:
           scan: "./"
           ACTIONS_STEP_DEBUG: true
