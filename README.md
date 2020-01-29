@@ -158,9 +158,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: steps.autotagger.outputs.tagname
-        release_name: steps.autotagger.outputs.tagname
-        body: steps.autotagger.outputs.tagmessage
+        tag_name: ${{ steps.autotagger.outputs.tagname }}
+        release_name: ${{ steps.autotagger.outputs.tagname }}
+        body: ${{ steps.autotagger.outputs.tagmessage }}
         draft: false
         prerelease: env.IS_PRERELEASE != ''
 
