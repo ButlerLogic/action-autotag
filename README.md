@@ -54,7 +54,7 @@ jobs:
         # unless you have a very specific use case.
         force: true
         # Typically an npm token
-        REGISTRY_TOKEN: "${{ secrets.REGISTRY_TOKEN }}"
+        token: "${{ secrets.REGISTRY_TOKEN }}"
 
 ```
 
@@ -85,7 +85,7 @@ There are several options to customize how the publisher handles operations.
     - uses: author/action-publish@stable
       with:
         scan: ".browser_dist, .node_dist"
-        REGISTRY_TOKEN: "${{ secrets.REGISTRY_TOKEN }}"
+        token: "${{ secrets.REGISTRY_TOKEN }}"
     ```
 
 1. `ignore`
@@ -97,7 +97,7 @@ There are several options to customize how the publisher handles operations.
       with:
         scan: "./"
         ignore: "**/build, **/test"
-        REGISTRY_TOKEN: "${{ secrets.REGISTRY_TOKEN }}"
+        token: "${{ secrets.REGISTRY_TOKEN }}"
     ```
 
 1. `force`
@@ -108,7 +108,7 @@ There are several options to customize how the publisher handles operations.
     - uses: author/action-publish@stable
       with:
         force: true
-        REGISTRY_TOKEN: "${{ secrets.REGISTRY_TOKEN }}"
+        token: "${{ secrets.REGISTRY_TOKEN }}"
     ```
 
 ## Developer Notes
