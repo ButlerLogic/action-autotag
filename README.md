@@ -53,8 +53,9 @@ jobs:
         # module. We don't recommend setting this,
         # unless you have a very specific use case.
         force: true
+      env:
         # Typically an npm token
-        token: "${{ secrets.REGISTRY_TOKEN }}"
+        REGISTRY_TOKEN: "${{ secrets.NPM_TOKEN }}"
 
 ```
 
@@ -85,7 +86,8 @@ There are several options to customize how the publisher handles operations.
     - uses: author/action-publish@stable
       with:
         scan: ".browser_dist, .node_dist"
-        token: "${{ secrets.REGISTRY_TOKEN }}"
+      env:
+        REGISTRY_TOKEN: "${{ secrets.NPM_TOKEN }}"
     ```
 
 1. `ignore`
@@ -97,7 +99,8 @@ There are several options to customize how the publisher handles operations.
       with:
         scan: "./"
         ignore: "**/build, **/test"
-        token: "${{ secrets.REGISTRY_TOKEN }}"
+      env:
+        REGISTRY_TOKEN: "${{ secrets.NPM_TOKEN }}"
     ```
 
 1. `force`
@@ -108,7 +111,8 @@ There are several options to customize how the publisher handles operations.
     - uses: author/action-publish@stable
       with:
         force: true
-        token: "${{ secrets.REGISTRY_TOKEN }}"
+      env:
+        REGISTRY_TOKEN: "${{ secrets.NPM_TOKEN }}"
     ```
 
 ## Developer Notes
@@ -169,8 +173,8 @@ jobs:
       id: publish
       if: steps.autotagger.outputs.tagname != ''
       uses: author/action-publish@stable
-      with:
-        token: ${{ secrets.REGISTRY_TOKEN }}
+      env:
+        REGISTRY_TOKEN: "${{ secrets.NPM_TOKEN }}"
 ```
 
 The configuration above will run whenever new code is merged into the master branch. It will check the code out and use the [butlerlogic/action-autotag](https://github.com/butlerlogic/action-autotag) tag to automatically create a new git tag _if a new version is detected_. If there is no new tag, the action exits gracefully and successfully.
@@ -228,7 +232,8 @@ The final publish step needs to be modified to:
       uses: author/action-publish@stable
       with:
         scan: './.dist'
-        token: ${{ secrets.REGISTRY_TOKEN }}
+      env:
+        REGISTRY_TOKEN: "${{ secrets.NPM_TOKEN }}"
 ```
 
 The publish action will scan the `.dist` directory (and recursively scan subdirectories) to find all modules and publish them.
