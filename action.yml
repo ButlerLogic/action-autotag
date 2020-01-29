@@ -17,7 +17,7 @@ inputs:
     required: false
 outputs:
   modules:
-    description: A comma-delimited list of modules that were updated. Ex: '@myorg/mypkg@1.0.0, @myorg/myotherpkg@1.4.1'
+    description: "A comma-delimited list of modules that were updated. Ex: '@myorg/mypkg@1.0.0, @myorg/myotherpkg@1.4.1'"
 runs:
   using: "node12"
   main: "lib/main.js"
