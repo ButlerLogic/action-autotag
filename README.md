@@ -2,6 +2,13 @@
 
 This action will read a `package.json` file and compare the `version` attribute to the project's known tags. If a corresponding tag does not exist, it will be created.
 
+This tag works well in combination with:
+
+- [actions/create-release](https://github.com/actions/create-release) (Auto-release)
+- [author/action-publish](https://github.com/author/action-publish) (Auto-publish JavaScript/Node modules)
+- [author/action-rollback](https://github.com/author/action-rollback) (Auto-rollback releases on failures)
+- [author/template-cross-runtime](https://github.com/author/template-cross-runtime) (a cross-runtime JavaScript repo template)
+
 ## Usage
 
 The following is an example `.github/workflows/main.yml` that will execute when a `push` to the `master` branch occurs.
