@@ -71,7 +71,7 @@ There are several options to customize how the tag is created.
 
 1. `tag_prefix`
 
-    By default, `package.json` uses [semantic versioning](https://semver.org/), such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefx` is set to `v`, then the tag would be labeled as `v1.0.0`.
+    By default, `package.json` uses [semantic versioning](https://semver.org/), such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefix` is set to `v`, then the tag would be labeled as `v1.0.0`.
 
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
