@@ -2,23 +2,30 @@
 
 This action will read a `package.json` file and compare the `version` attribute to the project's known tags. If a corresponding tag does not exist, it will be created.
 
+This tag works well in combination with:
+
+- [actions/create-release](https://github.com/actions/create-release) (Auto-release)
+- [author/action-publish](https://github.com/author/action-publish) (Auto-publish JavaScript/Node modules)
+- [author/action-rollback](https://github.com/author/action-rollback) (Auto-rollback releases on failures)
+- [author/template-cross-runtime](https://github.com/author/template-cross-runtime) (a cross-runtime JavaScript repo template)
+
 ## Usage
 
-The following is an example `.github/main.workflow` that will execute when a `push` to the `master` branch occurs.
+The following is an example `.github/workflows/main.yml` that will execute when a `push` to the `master` branch occurs.
 
 ```yaml
-name: My Workflow
+name: Create Tag
 
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - uses: butlerlogic/action-autotag@stable
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -29,8 +36,8 @@ To make this work, the workflow must have the checkout action _before_ the autot
 This **order** is important!
 
 ```yaml
-- uses: actions/checkout@master
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: actions/checkout@v2
+- uses: butlerlogic/action-autotag@stable
 ```
 
 > If the repository is not checked out first, the autotagger cannot find the package.json file.
@@ -40,7 +47,7 @@ This **order** is important!
 The `GITHUB_TOKEN` must be passed in. Without this, it is not possible to create a new tag. Make sure the autotag action looks like the following example:
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: butlerlogic/action-autotag@stable
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
@@ -64,7 +71,7 @@ There are several options to customize how the tag is created.
 
 1. `tag_prefix`
 
-    By default, `package.json` uses [semantic versioning](https://semver.org/), such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefx` is set to `v`, then the tag would be labeled as `v1.0.0`.
+    By default, `package.json` uses [semantic versioning](https://semver.org/), such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefix` is set to `v`, then the tag would be labeled as `v1.0.0`.
 
     ```yaml
     - uses: butlerlogic/action-autotag@1.0.0
