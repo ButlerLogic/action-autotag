@@ -1,12 +1,12 @@
 {
-  "name": "multipublish-action",
-  "version": "1.0.0-beta.1",
+  "name": "@author.io/action-publish",
+  "version": "1.0.0",
   "private": true,
   "description": "Automatically publish JavaScript modules to a registry (like the npm registry). The code base is scanned for JavaScript modules, each of which is published to the specified registry (default is npm). Respects .npmrc files if present in the module's root directory.",
   "main": "lib/main.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/author/action-multipublish.git"
+    "url": "git+https://github.com/author/action-publish.git"
   },
   "keywords": [
     "actions",
@@ -16,6 +16,7 @@
   ],
   "author": "Author.io",
   "license": "MIT",
+  "private": true,
   "dependencies": {
     "@actions/core": "^1.2.2",
     "@actions/github": "^2.1.0",
