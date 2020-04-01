@@ -90,7 +90,7 @@ export default class Tag {
         owner,
         repo,
         tag: this.name,
-        message: this.message,
+        message: await this.getMessage(),
         object: process.env.GITHUB_SHA,
         type: 'commit'
       })
