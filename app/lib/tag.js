@@ -1,9 +1,10 @@
 import core from '@actions/core'
 import os from 'os'
-import { GitHub, context } from '@actions/github'
+import GitHub from '@actions/github'
 
 // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
 const github = new GitHub(process.env.GITHUB_TOKEN || process.env.INPUT_GITHUB_TOKEN)
+const context = github.context
 // Get owner and repo from context of payload that triggered the action
 const { owner, repo } = context.repo
 
