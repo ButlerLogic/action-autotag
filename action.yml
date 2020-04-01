@@ -29,6 +29,9 @@ inputs:
   version:
     description: Explicitly set the version here instead of automatically detecting from `package.json`. Useful for non-JavaScript projects where version may be output by a previous action.
     required: false
+  regex_pattern:
+    description: An optional attribute containing the regular expression used to extract the version number.
+    required: false
 outputs:
   tagname:
     description: Returns the new tag value. Empty if a tag is not created.

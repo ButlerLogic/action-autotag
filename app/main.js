@@ -32,7 +32,7 @@ async function run () {
         break
 
       case 'regex':
-        version = (new Regex(root, new RegExp(pattern, 'i'))).version
+        version = (new Regex(root, new RegExp(core.getInput('regex_pattern', { required: true }), 'i'))).version
         break
 
       default:
