@@ -6,7 +6,7 @@ import gh from '@actions/github'
 const github = new gh.GitHub(process.env.GITHUB_TOKEN || process.env.INPUT_GITHUB_TOKEN)
 // Get owner and repo from context of payload that triggered the action
 const { owner, repo } = gh.context
-
+console.log(owner, repo)
 export default class Tag {
   constructor (prefix, version, postfix) {
     this.prefix = prefix
