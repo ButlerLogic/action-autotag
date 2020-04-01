@@ -59,7 +59,7 @@ export default class Tag {
       return changelog.data.commits
         .map(
           (commit, i) =>
-            `${i + 1}) ${commit.commit.message}${
+            `${i === 0 ? '\n' : ''}${i + 1}) ${commit.commit.message}${
               commit.hasOwnProperty('author')
                 ? commit.author.hasOwnProperty('login')
                   ? ' (' + commit.author.login + ')'
