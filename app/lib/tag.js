@@ -15,6 +15,9 @@ export default class Tag {
     this._tags = null
     this._message = null
     this._exists = null
+    this._sha = ''
+    this._uri = ''
+    this._ref = ''
   }
 
   get name () {
@@ -25,6 +28,18 @@ export default class Tag {
     if (value && value.length > 0) {
       this._message = value
     }
+  }
+
+  get sha () {
+    return this._sha || ''
+  }
+
+  get uri () {
+    return this._uri || ''
+  }
+
+  get ref () {
+    return this._ref || ''
   }
 
   async getMessage () {
@@ -105,6 +120,8 @@ export default class Tag {
 
       // Create reference
       let newReference
+      this._sha = newTag.data.sha
+
       try {
         newReference = await github.git.createRef({
           owner,
@@ -123,17 +140,10 @@ export default class Tag {
         throw e
       }
 
-      core.warning(`Reference ${newReference.data.ref} available at ${newReference.data.url}` + os.EOL)
+      this._uri = newReference.data.url
+      this._ref = newReference.data.ref
 
-      // Store values for other actions
-      if (typeof newTag === 'object' && typeof newReference === 'object') {
-        core.setOutput('tagname', this.name)
-        core.setOutput('tagsha', newTag.data.sha)
-        core.setOutput('taguri', newReference.data.url)
-        core.setOutput('tagmessage', this.message)
-        core.setOutput('tagref', newReference.data.ref)
-        core.setOutput('tagcreated', 'yes')
-      }
+      core.warning(`Reference ${newReference.data.ref} available at ${newReference.data.url}` + os.EOL)
     } else {
       core.warning('Cannot push tag (it already exists).')
     }

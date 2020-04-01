@@ -62,6 +62,11 @@ async function run () {
     tag.message = core.getInput('tag_message', { required: false }).trim()
     await tag.push()
 
+    core.setOutput('tagname', tag.name)
+    core.setOutput('tagsha', tag.sha)
+    core.setOutput('taguri', tag.uri)
+    core.setOutput('tagmessage', tag.message)
+    core.setOutput('tagref', tag.ref)
     core.setOutput('tagcreated', 'yes')
   } catch (error) {
     core.warning(error.message)
