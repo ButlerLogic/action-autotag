@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: Rollback Release
-        if: success()
+        if: success() && ${{ steps.autotagger.outputs.tagcreated = "yes" }}
         uses: author/action-rollback@stable
         with:
           tag: ${{ steps.autotagger.outputs.tagname }}
