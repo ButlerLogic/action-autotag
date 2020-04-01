@@ -4,9 +4,6 @@
   "private": true,
   "description": "Automatically create a tag whenever the version changes in package.json",
   "main": "lib/main.js",
-  "scripts": {
-    "test": "jest"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/butlerlogic/action-autotag.git"

@@ -1,12 +1,20 @@
 name: "Autotagger"
-description: "Automatically generate new tags when the package.json version changes."
-author: "ButlerLogic"
+description: "Automatically generate new tags for new versions. Supports several tagging strategies, including package.json, Dockerfiles, and Regex."
+author: "Butler Logic"
 branding:
   icon: "tag"
-  color: "black"
+  color: "blue"
 inputs:
+  root:
+    description: Autotag will look for the appropriate file in in this location (relative to project root).
+    required: false
+    default: './'
+  strategy:
+    description: Options include 'package' (for package.json), 'docker' (for Dockerfile), and 'regex' to extract from an arbitrary file. This does not need to be specified if the "regex_pattern" property is provided.
+    required: false
+    default: 'package'
   package_root:
-    description: Autotag will look for the package.json file in in this location.
+    description: (DEPRECATED. Use 'root' instead.) Autotag will look for the package.json file in in this location.
     required: false
     default: './'
   tag_prefix:
@@ -32,6 +40,8 @@ outputs:
     description: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
   version:
     description: The version, as defined in package.json or explicitly set in the input.
+  tagcreated:
+    description: A "yes" or "no", indicating a new tag was created.
 runs:
-  using: "node12"
-  main: "lib/main.js"
+  using: 'docker'
+  image: 'Dockerfile'
