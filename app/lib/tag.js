@@ -33,7 +33,13 @@ export default class Tag {
     }
 
     try {
-      const changelog = await github.repos.compareCommits({ owner, repo, base: tags.data.shift().name, head: 'master' })
+      let tags = await this.getTags()
+
+      if (tags.length === 0) {
+        return `Version ${this.version}`
+      }
+
+      const changelog = await github.repos.compareCommits({ owner, repo, base: tags.shift().name, head: 'master' })
 
       return changelog.data.commits
         .map(
