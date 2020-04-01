@@ -16,7 +16,7 @@ async function run () {
     // Identify the tag parsing strategy
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || './'
     const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
-    core.warning(`Attempting to use ${strategy} strategy.`)
+    core.warning(`Attempting to use ${strategy} version extraction strategy.`)
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
@@ -65,6 +65,7 @@ async function run () {
     core.setOutput('tagcreated', 'yes')
   } catch (error) {
     core.warning(error.message)
+    core.warning(error.stack)
     core.setOutput('tagname', '')
     core.setOutput('tagsha', '')
     core.setOutput('taguri', '')
