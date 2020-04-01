@@ -116,11 +116,11 @@ export default class Tag {
         type: 'commit'
       })
 
+      this._sha = newTag.data.sha
       core.warning(`Created new tag: ${newTag.data.tag}`)
 
       // Create reference
       let newReference
-      this._sha = newTag.data.sha
 
       try {
         newReference = await github.git.createRef({

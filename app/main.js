@@ -51,6 +51,8 @@ async function run () {
       core.getInput('tag_suffix', { required: false })
     )
 
+    core.warning(`Attempting to create ${tag.name} tag.`)
+
     // Check for existance of tag and abort (short circuit) if it already exists.
     if (await tag.exists()) {
       core.warning(`"${tag.name}" tag already exists.` + os.EOL)
