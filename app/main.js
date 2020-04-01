@@ -10,6 +10,9 @@ async function run () {
     Setup.debug()
     Setup.requireAnyEnv('GITHUB_TOKEN', 'INPUT_GITHUB_TOKEN')
 
+    // Configure the default output
+    core.setOutput('tagcreated', 'no')
+
     // Identify the tag parsing strategy
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || './'
     const strategy = (core.getInput('strategy', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
@@ -51,13 +54,14 @@ async function run () {
     if (await tag.exists()) {
       core.warning(`"${tag.name}" tag already exists.` + os.EOL)
       core.setOutput('tagname', '')
-      core.setOutput('tagcreated', 'no')
       return
     }
 
     // The tag setter will autocorrect the message if necessary.
     tag.message = core.getInput('tag_message', { required: false }).trim()
     await tag.push()
+
+    core.setOutput('tagcreated', 'yes')
   } catch (error) {
     core.warning(error.message)
     core.setOutput('tagname', '')
