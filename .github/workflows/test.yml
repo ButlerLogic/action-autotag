@@ -6,7 +6,8 @@ on:
       - master
 
 jobs:
-  build:
+  test:
+    name: Test Suite
     runs-on: ubuntu-latest
     steps:
         # Checkout updated source code
@@ -22,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: Rollback Release
-        if: failure() && steps.create_release.outputs.id != ''
+        if: success()
         uses: author/action-rollback@stable
         with:
           tag: ${{ steps.autotagger.outputs.tagname }}
