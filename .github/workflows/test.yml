@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  test:
-    name: Test Suite
+  package:
+    name: Test Suite - Package Strategy
     runs-on: ubuntu-latest
     steps:
         # Checkout updated source code
@@ -18,7 +18,7 @@ jobs:
         id: autotagger
         uses: butlerlogic/action-autotag@master
         with:
-          tag_prefix: 'test_'
+          tag_prefix: 'test_package_'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
@@ -29,3 +29,29 @@ jobs:
           tag: ${{ steps.autotagger.outputs.tagname }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  docker:
+    name: Test Suite - Docker Strategy
+    runs-on: ubuntu-latest
+    steps:
+        # Checkout updated source code
+      - uses: actions/checkout@v2
+    
+        # If the version has changed, create a new git tag for it.
+      - name: Tag
+        id: autotagger
+        uses: butlerlogic/action-autotag@master
+        with:
+          strategy: docker
+          tag_prefix: 'test_docker_'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Rollback Release
+        if: success() && ${{ steps.autotagger.outputs.tagcreated }} = "yes"
+        uses: author/action-rollback@stable
+        with:
+          tag: ${{ steps.autotagger.outputs.tagname }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
