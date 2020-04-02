@@ -26,7 +26,7 @@ jobs:
         if: success() && ${{ steps.autotagger.outputs.tagcreated }} = "yes"
         uses: author/action-rollback@master
         with:
-          tag: ${{ steps.autotagger.outputs.tagname }}
+          tag: ${{ steps.autotagger.outputs.tagrequested }}
           delete_orphan_tag: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,7 +40,7 @@ jobs:
     
         # If the version has changed, create a new git tag for it.
       - name: Tag
-        id: autotagger
+        id: docker_autotagger
         uses: butlerlogic/action-autotag@master
         with:
           strategy: docker
@@ -49,10 +49,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: Rollback Release
-        if: success() && ${{ steps.autotagger.outputs.tagcreated }} = "yes"
+        if: success() && ${{ steps.docker_autotagger.outputs.tagcreated }} = "yes"
         uses: author/action-rollback@master
         with:
-          tag: ${{ steps.autotagger.outputs.tagname }}
+          tag: ${{ steps.docker_autotagger.outputs.tagrequested }}
           delete_orphan_tag: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

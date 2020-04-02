@@ -40,10 +40,12 @@ outputs:
     description: The URI/URL of the new tag reference.
   tagmessage:
     description: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
-  version:
-    description: The version, as defined in package.json or explicitly set in the input.
   tagcreated:
     description: A "yes" or "no", indicating a new tag was created.
+  tagrequested:
+    description: The name of the requested tag. This will be populated even if the tag is not created.
+  version:
+    description: The version, as defined in package.json or explicitly set in the input.
 runs:
   using: 'docker'
   image: 'Dockerfile'
