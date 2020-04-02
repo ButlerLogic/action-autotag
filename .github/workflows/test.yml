@@ -1,4 +1,4 @@
-name: Action Test
+name: Autotag Action Test
 
 on:
   push:
