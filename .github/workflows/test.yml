@@ -22,7 +22,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
-      - name: Rollback Release
+      - name: Rollback Package Test Release
         if: success() && ${{ steps.autotagger.outputs.tagcreated }} = "yes"
         uses: author/action-rollback@master
         with:
@@ -48,7 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
-      - name: Rollback Release
+      - name: Rollback Docker Test Release
         if: success() && ${{ steps.docker_autotagger.outputs.tagcreated }} = "yes"
         uses: author/action-rollback@master
         with:
