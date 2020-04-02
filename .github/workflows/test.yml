@@ -15,7 +15,7 @@ jobs:
     
         # If the version has changed, create a new git tag for it.
       - name: Tag
-        id: autotagger
+        id: package_autotagger
         uses: butlerlogic/action-autotag@master
         with:
           tag_prefix: test_package_
@@ -23,14 +23,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: Rollback Package Test Release
-        if: success() && ${{ steps.autotagger.outputs.tagcreated }} = "yes"
+        id: package_rollback
+        if: success() && ${{ steps.package_autotagger.outputs.tagcreated }} = "yes"
         uses: author/action-rollback@master
         with:
-          tag: ${{ steps.autotagger.outputs.tagrequested }}
+          tag: ${{ steps.package_autotagger.outputs.tagrequested }}
           delete_orphan_tag: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
   docker:
     name: Test Suite - Docker Strategy
     runs-on: ubuntu-latest
@@ -49,6 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: Rollback Docker Test Release
+        id: docker_rollback
         if: success() && ${{ steps.docker_autotagger.outputs.tagcreated }} = "yes"
         uses: author/action-rollback@master
         with:
