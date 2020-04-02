@@ -18,7 +18,7 @@ jobs:
         id: autotagger
         uses: butlerlogic/action-autotag@master
         with:
-          tag_prefix: 'test_package_'
+          tag_prefix: test_package_
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
@@ -44,7 +44,7 @@ jobs:
         uses: butlerlogic/action-autotag@master
         with:
           strategy: docker
-          tag_prefix: 'test_docker_'
+          tag_prefix: test_docker_
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
