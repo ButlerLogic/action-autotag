@@ -31,12 +31,12 @@ jobs:
           delete_orphan_tag: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  docker:
-    name: Test Suite - Docker Strategy
-    runs-on: ubuntu-latest
-    steps:
-        # Checkout updated source code
-      - uses: actions/checkout@v2
+  # docker:
+  #   name: Test Suite - Docker Strategy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #       # Checkout updated source code
+  #     - uses: actions/checkout@v2
     
         # If the version has changed, create a new git tag for it.
       - name: Tag
