@@ -4,6 +4,7 @@ import Setup from './lib/setup.js'
 import Package from './lib/package.js'
 import Tag from './lib/tag.js'
 import Regex from './lib/regex.js'
+import Dockerfile from './lib/docker.js'
 
 async function run () {
   try {
