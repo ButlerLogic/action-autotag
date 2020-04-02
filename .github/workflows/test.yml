@@ -27,6 +27,7 @@ jobs:
         uses: author/action-rollback@master
         with:
           tag: ${{ steps.autotagger.outputs.tagname }}
+          delete_orphan_tag: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
@@ -52,6 +53,7 @@ jobs:
         uses: author/action-rollback@master
         with:
           tag: ${{ steps.autotagger.outputs.tagname }}
+          delete_orphan_tag: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      
