@@ -19,6 +19,7 @@ jobs:
         uses: butlerlogic/action-autotag@master
         with:
           tag_prefix: test_package_
+          commit_message_template: "{{number}}) {{message}} ({{author}})\n"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
