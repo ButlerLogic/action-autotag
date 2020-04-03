@@ -55,18 +55,28 @@ export default class Tag {
       }
 
       const changelog = await github.repos.compareCommits({ owner, repo, base: tags.shift().name, head: 'master' })
+      const tpl = (core.getInput('commit_message_template', { required: false }) || '').trim()
 
       return changelog.data.commits
         .map(
-          (commit, i) =>
-            `${i === 0 ? '\n' : ''}${i + 1}) ${commit.commit.message}${
-              commit.hasOwnProperty('author')
-                ? commit.author.hasOwnProperty('login')
-                  ? ' (' + commit.author.login + ')'
+          (commit, i) => {
+            if (tpl.length > 0) {
+              return tpl
+                .replace(/\{\{\s?(number)\s?\}\}/gi, i + 1)
+                .replace(/\{\{\s?(message)\s?\}\}/gi, commit.commit.message)
+                .replace(/\{\{\s?(author)\s?\}\}/gi, commit.hasOwnProperty('author') ? (commit.author.hasOwnProperty('login') ? commit.author.login : '') : '')
+                .replace(/\{\{\s?(sha)\s?\}\}/gi, commit.sha)
+                .trim() + '\n'
+            } else {
+              return `${i === 0 ? '\n' : ''}${i + 1}) ${commit.commit.message}${
+                commit.hasOwnProperty('author')
+                  ? commit.author.hasOwnProperty('login')
+                    ? ' (' + commit.author.login + ')'
+                    : ''
                   : ''
-                : ''
-            }\n(SHA: ${commit.sha})\n`
-        )
+              }\n(SHA: ${commit.sha})\n`
+            }
+          })
         .join('\n')
     } catch (e) {
       core.warning('Failed to generate changelog from commits: ' + e.message + os.EOL)

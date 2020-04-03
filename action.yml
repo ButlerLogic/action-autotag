@@ -25,6 +25,9 @@ inputs:
   tag_message:
     description: This is the annotated commit message associated with the tag. By default, a changelog will be generated from the commits between the latest tag and the new tag (HEAD). This will override that with a hard-coded message.
     required: false
+  commit_message_template:
+    description: "The commit message template (per commit). Default is `{{number}}) {{message}} ({{author}})\nSHA: {{sha}}\n`"
+    required: false
   version:
     description: Explicitly set the version here instead of automatically detecting from `package.json`. Useful for non-JavaScript projects where version may be output by a previous action.
     required: false
