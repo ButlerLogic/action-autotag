@@ -23,15 +23,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
-      # - name: Rollback Package Test Release
-      #   id: package_rollback
-      #   if: success() && ${{ steps.package_autotagger.outputs.tagcreated }} = "yes"
-      #   uses: author/action-rollback@master
-      #   with:
-      #     tag: ${{ steps.package_autotagger.outputs.tagrequested }}
-      #     delete_orphan_tag: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Rollback Package Test Release
+        id: package_rollback
+        if: success() && ${{ steps.package_autotagger.outputs.tagcreated }} = "yes"
+        uses: author/action-rollback@master
+        with:
+          tag: ${{ steps.package_autotagger.outputs.tagrequested }}
+          delete_orphan_tag: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   docker:
     name: Test Suite - Docker Strategy
     runs-on: ubuntu-latest
