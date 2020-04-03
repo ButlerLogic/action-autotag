@@ -185,6 +185,19 @@ If you are building an action that runs after this one, be aware this action pro
 
 This action was written and is primarily maintained by [Corey Butler](https://github.com/coreybutler).
 
+Several contributors
+
+**Sponsors (as of 2020)**
+
+These sponsors are helping make this project possible.
+
+<table cellpadding="10" cellspacing="0" border="0">
+  <tr>
+    <td><a href="https://metadoc.io"><img src="https://github.com/coreybutler/staticassets/raw/master/sponsors/metadoclogobig.png" width="200px"/></a></td>
+    <td><a href="https://butlerlogic.com"><img src="https://github.com/coreybutler/staticassets/raw/master/sponsors/butlerlogic_logo.png" width="200px"/></a></td>
+  </tr>
+</table>
+
 # Our Ask...
 
 If you use this or find value in it, please consider contributing in one or more of the following ways:
