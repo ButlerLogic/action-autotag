@@ -1,5 +1,5 @@
 name: "Autotagger"
-description: "Automatically generate new tags for new versions. Supports several tagging strategies, including package.json, Dockerfiles, and Regex."
+description: "Automatically generate new tags for new versions. Supports several tagging strategies."
 author: "Butler Logic"
 branding:
   icon: "tag"
