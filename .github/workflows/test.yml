@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
     
         # If the version has changed, create a new git tag for it.
-      - name: Tag
+      - name: Tag Package
         id: package_autotagger
         uses: butlerlogic/action-autotag@master
         with:
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v2
     
         # If the version has changed, create a new git tag for it.
-      - name: Tag
+      - name: Tag Dockerfile
         id: docker_autotagger
         uses: butlerlogic/action-autotag@master
         with:
