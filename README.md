@@ -185,6 +185,8 @@ If you are building an action that runs after this one, be aware this action pro
 
 This action was written and is primarily maintained by [Corey Butler](https://github.com/coreybutler).
 
+This project has had some great contributions from [these folks](https://github.com/ButlerLogic/action-autotag/graphs/contributors). Thanks go to @Jaliborc, who came up with the idea and original implementation for a pattern-based tag extraction.
+
 # Our Ask...
 
 If you use this or find value in it, please consider contributing in one or more of the following ways:
