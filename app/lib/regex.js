@@ -2,8 +2,8 @@ import fs from 'fs'
 import path from 'path'
 
 export default class Regex {
-  constructor (root = null, pattern) {
-    root = path.join(process.env.GITHUB_WORKSPACE, root)
+  constructor (root = './', pattern) {
+    root = path.resolve(root)
 
     if (fs.statSync(root).isDirectory()) {
       throw new Error(`${root} is a directory. The Regex tag identification strategy requires a file.`)

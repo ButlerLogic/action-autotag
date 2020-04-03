@@ -6,7 +6,7 @@ import core from '@actions/core'
 export default class Dockerfile extends Regex {
   constructor (root = null) {
     root = path.join(process.env.GITHUB_WORKSPACE, root)
-    core.debug(fs.readdirSync(root))
+
     if (fs.statSync(root).isDirectory()) {
       root = path.join(root, 'Dockerfile')
     }
