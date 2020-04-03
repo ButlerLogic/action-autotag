@@ -185,7 +185,7 @@ If you are building an action that runs after this one, be aware this action pro
 
 This action was written and is primarily maintained by [Corey Butler](https://github.com/coreybutler).
 
-Several contributors
+This project has had great contributions from [these wonderful people](https://github.com/ButlerLogic/action-autotag/graphs/contributors). Additional gratitude goes to [Jaliborc](https://github.com/Jaliborc), who came up with the idea and original implementation for a pattern-based tag extraction (the Regex strategy).
 
 **Sponsors (as of 2020)**
 
