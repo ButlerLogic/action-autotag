@@ -1,0 +1,63 @@
+name: Autotag Action Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  package:
+    name: Test Suite - Package Strategy
+    runs-on: ubuntu-latest
+    steps:
+        # Checkout updated source code
+      - uses: actions/checkout@v2
+    
+        # If the version has changed, create a new git tag for it.
+      - name: Tag Package
+        id: package_autotagger
+        uses: butlerlogic/action-autotag@master
+        with:
+          tag_prefix: test_package_
+          commit_message_template: "{{number}}) {{message}} ({{author}})\n"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Rollback Package Test Release
+        id: package_rollback
+        if: success() && ${{ steps.package_autotagger.outputs.tagcreated }} = "yes"
+        uses: author/action-rollback@master
+        with:
+          tag: ${{ steps.package_autotagger.outputs.tagrequested }}
+          delete_orphan_tag: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  docker:
+    name: Test Suite - Docker Strategy
+    runs-on: ubuntu-latest
+    steps:
+        # Checkout updated source code
+      - uses: actions/checkout@v2
+    
+        # If the version has changed, create a new git tag for it.
+      - name: Tag Dockerfile
+        id: docker_autotagger
+        uses: butlerlogic/action-autotag@master
+        with:
+          strategy: docker
+          tag_prefix: test_docker_
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Rollback Docker Test Release
+        id: docker_rolback
+        if: success() && ${{ steps.docker_autotagger.outputs.tagcreated }} = "yes"
+        uses: author/action-rollback@master
+        env:
+          TAG: ${{ steps.docker_autotagger.outputs.tagrequested }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: ${{ steps.docker_autotagger.outputs.tagrequested }}
+          delete_orphan_tag: true
+        
+     

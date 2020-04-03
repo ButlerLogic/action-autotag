@@ -1,14 +1,21 @@
 name: "Autotagger"
-description: "Automatically generate new tags when the package.json version changes."
-author: "ButlerLogic"
+description: "Automatically generate new tags for new versions. Supports several tagging strategies."
+author: "Butler Logic"
 branding:
   icon: "tag"
-  color: "black"
+  color: "blue"
 inputs:
-  package_root:
-    description: Autotag will look for the package.json file in in this location.
+  root:
+    description: Autotag will look for the appropriate file in in this location (relative to project root).
     required: false
     default: './'
+  strategy:
+    description: Options include 'package' (for package.json), 'docker' (for Dockerfile), and 'regex' to extract from an arbitrary file. This does not need to be specified if the "regex_pattern" property is provided.
+    required: false
+    default: 'package'
+  package_root:
+    description: (DEPRECATED. Use 'root' instead.) Autotag will look for the package.json file in in this location.
+    required: false
   tag_prefix:
     description: By default, package.json uses semantic versioning, such as "1.0.0". A prefix can be used to add text before the tag name. For example, if tag_prefx is set to "v", then the tag would be labeled as "v1.0.0".
     required: false
@@ -18,8 +25,14 @@ inputs:
   tag_message:
     description: This is the annotated commit message associated with the tag. By default, a changelog will be generated from the commits between the latest tag and the new tag (HEAD). This will override that with a hard-coded message.
     required: false
+  commit_message_template:
+    description: "The commit message template (per commit). Default is `{{number}}) {{message}} ({{author}})\nSHA: {{sha}}\n`"
+    required: false
   version:
     description: Explicitly set the version here instead of automatically detecting from `package.json`. Useful for non-JavaScript projects where version may be output by a previous action.
+    required: false
+  regex_pattern:
+    description: An optional attribute containing the regular expression used to extract the version number.
     required: false
 outputs:
   tagname:
@@ -30,8 +43,12 @@ outputs:
     description: The URI/URL of the new tag reference.
   tagmessage:
     description: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
+  tagcreated:
+    description: A "yes" or "no", indicating a new tag was created.
+  tagrequested:
+    description: The name of the requested tag. This will be populated even if the tag is not created.
   version:
     description: The version, as defined in package.json or explicitly set in the input.
 runs:
-  using: "node12"
-  main: "lib/main.js"
+  using: 'docker'
+  image: 'Dockerfile'
