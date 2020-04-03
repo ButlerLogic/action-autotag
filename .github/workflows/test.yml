@@ -53,6 +53,7 @@ jobs:
         if: success() && ${{ steps.docker_autotagger.outputs.tagcreated }} = "yes"
         uses: author/action-rollback@master
         env:
+          TAG: ${{ steps.docker_autotagger.outputs.tagrequested }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag: ${{ steps.docker_autotagger.outputs.tagrequested }}
