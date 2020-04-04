@@ -42,6 +42,14 @@ export default class Tag {
     return this._ref || ''
   }
 
+  get prerelease () {
+    return /([0-9\.]{5}(-[\w\.0-9]+)?)/i.test(this.version)
+  }
+
+  get build () {
+    return /([0-9\.]{5}(\+[\w\.0-9]+)?)/i.test(this.version)
+  }
+
   async getMessage () {
     if (this._message !== null) {
       return this._message

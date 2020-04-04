@@ -123,6 +123,23 @@ _Using the **regex** strategy:_
 
 The version will be extracted by scanning the content of `/path/to/subdirectory/my.file` for a string like `version=1.0.0`. See the `regex_pattern` option for more details.
 
+### regex_pattern
+
+An optional attribute containing the regular expression used to extract the version number.
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    regex_pattern: "version=([0-9\.]{5}([-\+][\w\.0-9]+)?)"
+```
+
+This attribute is used as the first argument of a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp) object. The first "group" (i.e. what's in the main set of parenthesis/the whole version number) will be used as the version number. For an example, see this [working example](regexr.com/51r8j).
+
+The pattern described in this example is a simple one used. If you need a more complex one [complete pattern](https://regex101.com/r/vkijKf/1/) is:
+
+`^((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$`
+
 ### tag_prefix
 
 By default, [semantic versioning](https://semver.org/) is used, such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefix` is set to `v`, then the tag would be labeled as `v1.0.0`.
@@ -199,19 +216,6 @@ Useful for projects where the version number may be output by a previous action.
     version: "${{ steps.previous_step.outputs.version }}"
 ```
 
-### regex_pattern
-
-An optional attribute containing the regular expression used to extract the version number.
-
-```yaml
-- uses: butlerlogic/action-autotag@1.0.0
-  with:
-    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-    regex_pattern: "version=([0-9\.]{3,}(-[\w\.0-9]+)?)"
-```
-
-This attribute is used as the first argument of a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp) object. The first "group" (i.e. what's in the main set of parenthesis) will be used as the version number. For an example, see this [working example](regexr.com/51r8j).
-
 ## Developer Notes
 
 If you are building an action that runs after this one, be aware this action produces several [outputs](https://help.github.com/en/articles/metadata-syntax-for-github-actions#outputs):
@@ -223,6 +227,8 @@ If you are building an action that runs after this one, be aware this action pro
 1. `tagmessage`: The message applied to the tag reference (this is what shows up on the tag screen on Github).
 1. `tagcreated`: `yes` or `no`.
 1. `version` will be the extracted/provided version.
+1. `prerelease`: "yes" or "no", indicating the tag represents a semantic version pre-release.
+1. `build`: "yes" or "no", indicating the tag represents a semantic version build.
 
 ---
 

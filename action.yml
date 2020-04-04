@@ -49,6 +49,10 @@ outputs:
     description: The name of the requested tag. This will be populated even if the tag is not created.
   version:
     description: The version, as defined in package.json or explicitly set in the input.
+  prerelease:
+    description: \"yes\" or \"no\", indicating the tag represents a semantic version pre-release.
+  build:
+    description: \"yes\" or \"no\", indicating the tag represents a semantic version build.
 runs:
   using: 'docker'
   image: 'Dockerfile'
