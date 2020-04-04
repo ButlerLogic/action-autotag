@@ -64,7 +64,7 @@ The action will automatically extract the token at runtime. **DO NOT MANUALLY EN
 
 There are several options to customize how the tag is created.
 
-#### strategy
+#### strategy (required)
 
 This is the strategy used to identify the version number/tag from within the code base.
 
@@ -72,21 +72,56 @@ This is the strategy used to identify the version number/tag from within the cod
 1. _docker_: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value. USe this for container projects.
 1. _regex*_: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
 
-*An example "
-
-#### root `(required)`
-_Formerly `package_root`_
-
-By default, autotag will look for the `package.json` file in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
+> **EXCEPTION**: This property is _not_ required if the `regex_pattern` property is defined, because it is assumed to be "regex".
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    strategy: docker
+```
+
+#### root
+_Formerly `package_root`_
+
+Depending on the selected strategy, autotagger will look for the `package.json` or `Dockerfile` file in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
+
+_Using the **package** strategy:_
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    strategy: package # Optional, since "package" is the default strategy
     root: "/path/to/subdirectory"
 ```
 
-> **EXCEPTION**: This property is not required if the regex_pattern property is defined. In that case, this property is assumed to be "regex".
+The version number would be extracted from `/path/to/subdirectory/package.json`.
+
+_Using the **docker** strategy:_
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    strategy: docker
+    root: "/path/to/subdirectory"
+```
+
+The version number would be extracted from `/path/to/subdirectory/Dockerfile`, specifically looking for the `LABEL version=x.x.x` line within the file.
+
+_Using the **regex** strategy:_
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    strategy: regex # Optional since regex_pattern is defined
+    root: "/path/to/subdirectory/my.file"
+    regex_pattern: "version=([0-9\.])"
+```
+
+The version will be extracted by scanning the content of `/path/to/subdirectory/my.file` for a string like `version=1.0.0`. See the `regex_pattern` option for more details.
 
 #### tag_prefix
 
@@ -141,6 +176,16 @@ Optional data points:
 
 The default is `{{number}}) {{message}} ({{author}})\nSHA: {{sha}}\n`.
 
+_Example output:_
+
+```
+1) Update README.md (coreybutler)
+(SHA: c5e09fc45106a4b27b8f4598fb79811b589a4684)
+
+2) Added metadoc capability to introspect the shell/commands. (coreybutler)
+(SHA: b690be366a5636d51b1245a1b39c86102ddb8a81)
+```
+
 #### version
 
 Explicitly set the version instead of using automatic detection.
@@ -162,22 +207,22 @@ An optional attribute containing the regular expression used to extract the vers
 - uses: butlerlogic/action-autotag@1.0.0
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-    regex_pattern: "version=([0-9\.]+)"
+    regex_pattern: "version=([0-9\.]{3,}(-[\w\.0-9]+)?)"
 ```
 
-This attribute is used as the first argument of a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp) object. The first "group" (i.e. what's in parenthesis) will be used as the version number. For an example, see this [working example](regexr.com/51i6n).
+This attribute is used as the first argument of a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp) object. The first "group" (i.e. what's in the main set of parenthesis) will be used as the version number. For an example, see this [working example](regexr.com/51r8j).
 
 ## Developer Notes
 
 If you are building an action that runs after this one, be aware this action produces several [outputs](https://help.github.com/en/articles/metadata-syntax-for-github-actions#outputs):
 
 1. `tagname` will be empty if no tag was created, or it will be the value of the new tag.
+1. `tagrequested`: The name of the requested tag. This will be populated even if the tag is not created. This will usually be the same as `tagname` and/or `version` for successful executions. This output is typically used for rollbacks/notifications when the creation of a tag fails.
 1. `tagsha`: The SHA of the new tag.
 1. `taguri`: The URI/URL of the new tag reference.
-1. `tagmessage`: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
+1. `tagmessage`: The message applied to the tag reference (this is what shows up on the tag screen on Github).
 1. `tagcreated`: `yes` or `no`.
-1. `tagrequested`: The name of the requested tag. This will be populated even if the tag is not created. This will usually be the same as `tagname` and/or `version` for successful executions.
-1. `version` will be the version attribute found in the `package.json` file.
+1. `version` will be the extracted/provided version.
 
 ---
 
@@ -187,7 +232,7 @@ This action was written and is primarily maintained by [Corey Butler](https://gi
 
 This project has had great contributions from [these wonderful people](https://github.com/ButlerLogic/action-autotag/graphs/contributors). Additional gratitude goes to [Jaliborc](https://github.com/Jaliborc), who came up with the idea and original implementation for a pattern-based tag extraction (the Regex strategy).
 
-**Sponsors (as of 2020)**
+**Active Sponsors**
 
 These sponsors are helping make this project possible.
 
