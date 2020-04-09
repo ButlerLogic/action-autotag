@@ -144,20 +144,13 @@ jobs:
       # The remaining steps all depend on whether or  not
       # a new tag was created. There is no need to release/publish 
       # updates until the code base is in a releaseable state.
-
-      # If the new version/tag is a pre-release (i.e. 1.0.0-beta.1), create
-      # an environment variable indicating it is a prerelease.
-    - name: Pre-release
-      if: steps.autotagger.outputs.tagname != ''
-      run: |
-        if [[ "${{ steps.autotagger.output.version }}" == *"-"* ]]; then echo "::set-env IS_PRERELEASE=true";else echo "::set-env IS_PRERELEASE=''";fi
     
       # Create a github release
       # This will create a snapshot of the module,
       # available in the "Releases" section on Github.
     - name: Release
       id: create_release
-      if: steps.autotagger.outputs.tagname != ''
+      if: steps.autotagger.outputs.tagcreated == 'yes'
       uses: actions/create-release@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -166,7 +159,7 @@ jobs:
         release_name: ${{ steps.autotagger.outputs.tagname }}
         body: ${{ steps.autotagger.outputs.tagmessage }}
         draft: false
-        prerelease: env.IS_PRERELEASE != ''
+        prerelease: ${{ steps.autotagger.outputs.prerelease == 'yes' }}
 
       # Use this action to publish a single module to npm.
     - name: Publish
