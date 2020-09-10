@@ -140,7 +140,7 @@ The pattern described in this example is a simple one used. If you need a more c
 
 `^((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$`
 
-As of `1.0.3`, JavaScript named patterns are supported, where the group named `version` will be used to populate the tag. For example:
+As of `1.1.2`, JavaScript named patterns are supported, where the group named `version` will be used to populate the tag. For example:
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0

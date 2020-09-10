@@ -34,7 +34,9 @@ async function run () {
         break
 
       case 'regex':
-        version = (new Regex(root, new RegExp(core.getInput('regex_pattern', { required: false }), 'i'))).version
+        const pattern = core.getInput('regex_pattern', { required: false })
+        core.warning(`Using /${pattern}/gim custom version identification pattern.`)
+        version = (new Regex(root, new RegExp(pattern, 'gim'))).version
         break
 
       default:
