@@ -140,6 +140,15 @@ The pattern described in this example is a simple one used. If you need a more c
 
 `^((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$`
 
+As of `1.0.3`, JavaScript named patterns are supported, where the group named `version` will be used to populate the tag. For example:
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    regex_pattern: "(version=)(?<version>[\d+\.]{3}([-\+][\w\.0-9]+)?)"
+```
+
 ### tag_prefix
 
 By default, [semantic versioning](https://semver.org/) is used, such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefix` is set to `v`, then the tag would be labeled as `v1.0.0`.

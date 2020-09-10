@@ -19,6 +19,8 @@ export default class Regex {
     if (!content) {
       this._version = null
       // throw new Error(`Could not find pattern matching "${pattern.toString()}" in "${root}".`)
+    } else if (content.groups && content.groups.version) {
+      this._version = content.groups.version
     } else {
       this._version = content[1]
     }
