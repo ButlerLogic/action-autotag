@@ -134,7 +134,7 @@ An optional attribute containing the regular expression used to extract the vers
     regex_pattern: "version=([0-9\.]{5}([-\+][\w\.0-9]+)?)"
 ```
 
-This attribute is used as the first argument of a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp) object. The first "group" (i.e. what's in the main set of parenthesis/the whole version number) will be used as the version number. For an example, see this [working example](regexr.com/51r8j).
+This attribute is used as the first argument of a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp) object. The first "group" (i.e. what's in the main set of parenthesis/the whole version number) will be used as the version number. For an example, see this [working example](https://regexr.com/51r8j).
 
 The pattern described in this example is a simple one used. If you need a more complex one [complete pattern](https://regex101.com/r/vkijKf/1/) is:
 
