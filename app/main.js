@@ -17,7 +17,7 @@ async function run () {
     // Identify the tag parsing strategy
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || './'
     const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
-    core.warning(`Attempting to use ${strategy} version extraction strategy.`)
+    
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
@@ -35,7 +35,6 @@ async function run () {
 
       case 'regex':
         const pattern = core.getInput('regex_pattern', { required: false })
-        core.warning(`Using /${pattern}/gim custom version identification pattern.`)
         version = (new Regex(root, new RegExp(pattern, 'gim'))).version
         break
 
@@ -44,6 +43,13 @@ async function run () {
         return
     }
 
+    const msg = ` using the ${strategy} extraction${strategy === 'regex' ? ' with the /' + pattern + '/gim pattern.' : ''}.`
+
+    if (!version) {
+      throw new Error(`No version identified${msg}`)
+    }
+
+    core.warning(`Recognized "${version}"${msg}`)
     core.setOutput('version', version)
     core.debug(` Detected version ${version}`)
 
