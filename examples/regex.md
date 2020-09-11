@@ -21,9 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: butlerlogic/action-autotag@stable
+    - uses: butlerlogic/action-autotag@master
       with:
-        regex_pattern: "/(?:version:)(?:\\s)?(\\d+\\.\\d+\\d+.+)\\n?/"
+        regex_pattern: "(version:)(\\s)?(?<version>\\d+\\.\\d+\\.\\d+(.+)?)\\n?"
         root: ./.gorc
         tag_prefix: "v"
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
