@@ -22,6 +22,7 @@ async function run () {
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
     version = version === null || version.trim().length === 0 ? null : version
+    const pattern = core.getInput('regex_pattern', { required: false })
 
     switch (strategy) {
       case 'docker':
@@ -34,7 +35,6 @@ async function run () {
         break
 
       case 'regex':
-        const pattern = core.getInput('regex_pattern', { required: false })
         version = (new Regex(root, new RegExp(pattern, 'gim'))).version
         break
 
