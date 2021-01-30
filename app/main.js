@@ -51,7 +51,18 @@ async function run () {
     }
 
     const minVersion = core.getInput('minVersion', { required: false })
-    if (semver.lt(version, minVersion)) {
+    
+    // Ensure that version and minVersion are valid SemVer strings
+    const minVersionSemVer = semver.coerce(minVersion)
+    const versionSemVer = semver.coerce(version)
+    if (!minVersionSemVer) {
+      core.warning(`Skipping min version check. ${minVersion} is not valid SemVer`)
+    }
+    if(!versionSemVer) {
+      core.warning(`Skipping min version check. ${version} is not valid SemVer`)
+    }
+    
+    if (minVersionSemVer && versionSemVer && semver.lt(versionSemVer, minVersion)) {
       core.warning(`Version "${version}" is lower than minimum "${minVersion}"`)
       return
     }
