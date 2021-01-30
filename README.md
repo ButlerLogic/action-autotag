@@ -231,7 +231,7 @@ Set the minimum version which would be used to create a tag.
 
 The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also be used when introducing Autotag to a repository which has already tagged.
 
-For example, if the version `0.1.0` would already have been published, set the `minVersion` to the next patch to preent a duplicate tag.
+For example, if the version `0.1.0` would already have been published, set the `minVersion` to the next patch to prevent a duplicate tag for that version.
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
