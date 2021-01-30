@@ -32,7 +32,7 @@ inputs:
     description: Explicitly set the version here instead of automatically detecting from `package.json`. Useful for non-JavaScript projects where version may be output by a previous action.
     required: false
   minVersion:
-    description: Minimum version required to create a tag. By default it will prevent a version `0.0.0` to be tagged. Also useful when introducing Autotag to an existing repo, to start auto-tagging from a specific version
+    description: Minimum version required to create a tag. By default it will prevent a version `0.0.0` from being tagged. Also useful when introducing Autotag to an existing repo, to start auto-tagging from a specific version
     required: false
     default: '0.0.1'
   regex_pattern:
