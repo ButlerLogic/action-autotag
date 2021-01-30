@@ -1,5 +1,6 @@
 import core from '@actions/core'
 import os from 'os'
+import semver from 'semver'
 import Setup from './lib/setup.js'
 import Package from './lib/package.js'
 import Tag from './lib/tag.js'
@@ -17,7 +18,7 @@ async function run () {
     // Identify the tag parsing strategy
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || './'
     const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
-    
+
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
@@ -48,9 +49,9 @@ async function run () {
     if (!version) {
       throw new Error(`No version identified${msg}`)
     }
-    
+
     const minVersion = core.getInput('minVersion', { required: false })
-    if (version < minVersion) {
+    if (semver.lt(version, minVersion)) {
       core.warning(`Version "${version}" is lower than minimum "${minVersion}"`)
       return
     }
