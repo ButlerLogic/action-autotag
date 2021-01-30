@@ -225,6 +225,21 @@ Useful for projects where the version number may be output by a previous action.
     version: "${{ steps.previous_step.outputs.version }}"
 ```
 
+### minVersion
+
+Set the minimum version which would be used to create a tag. 
+
+The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also be used when introducing Autotag to a repository which has already tagged.
+
+For example, if the version `0.1.0` would already have been published, set the `minVersion` to the next patch to preent a duplicate tag.
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    minVersion: "0.1.1"
+```
+
 ## Developer Notes
 
 If you are building an action that runs after this one, be aware this action produces several [outputs](https://help.github.com/en/articles/metadata-syntax-for-github-actions#outputs):

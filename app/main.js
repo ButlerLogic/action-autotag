@@ -48,6 +48,12 @@ async function run () {
     if (!version) {
       throw new Error(`No version identified${msg}`)
     }
+    
+    const minVersion = core.getInput('minVersion', { required: false })
+    if (version < minVersion) {
+      core.warning(`Version "${version}" is lower than minimum "${minVersion}"`)
+      return
+    }
 
     core.warning(`Recognized "${version}"${msg}`)
     core.setOutput('version', version)
