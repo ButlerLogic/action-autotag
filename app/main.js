@@ -1,5 +1,6 @@
 import core from '@actions/core'
 import os from 'os'
+import semver from 'semver'
 import Setup from './lib/setup.js'
 import Package from './lib/package.js'
 import Tag from './lib/tag.js'
@@ -17,7 +18,7 @@ async function run () {
     // Identify the tag parsing strategy
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || './'
     const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
-    
+
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
@@ -47,6 +48,23 @@ async function run () {
 
     if (!version) {
       throw new Error(`No version identified${msg}`)
+    }
+
+    const minVersion = core.getInput('minVersion', { required: false })
+    
+    // Ensure that version and minVersion are valid SemVer strings
+    const minVersionSemVer = semver.coerce(minVersion)
+    const versionSemVer = semver.coerce(version)
+    if (!minVersionSemVer) {
+      core.warning(`Skipping min version check. ${minVersion} is not valid SemVer`)
+    }
+    if(!versionSemVer) {
+      core.warning(`Skipping min version check. ${version} is not valid SemVer`)
+    }
+    
+    if (minVersionSemVer && versionSemVer && semver.lt(versionSemVer, minVersionSemVer)) {
+      core.warning(`Version "${version}" is lower than minimum "${minVersion}"`)
+      return
     }
 
     core.warning(`Recognized "${version}"${msg}`)
