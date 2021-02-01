@@ -62,7 +62,7 @@ async function run () {
       core.warning(`Skipping min version check. ${version} is not valid SemVer`)
     }
     
-    if (minVersionSemVer && versionSemVer && semver.lt(versionSemVer, minVersion)) {
+    if (minVersionSemVer && versionSemVer && semver.lt(versionSemVer, minVersionSemVer)) {
       core.warning(`Version "${version}" is lower than minimum "${minVersion}"`)
       return
     }
