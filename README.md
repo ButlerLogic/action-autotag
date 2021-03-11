@@ -33,7 +33,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: butlerlogic/action-autotag@stable
-      with:
+      env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
 
@@ -76,8 +76,9 @@ This is the strategy used to identify the version number/tag from within the cod
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     strategy: docker
 ```
 
@@ -90,8 +91,9 @@ _Using the **package** strategy:_
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     strategy: package # Optional, since "package" is the default strategy
     root: "/path/to/subdirectory"
 ```
@@ -102,8 +104,9 @@ _Using the **docker** strategy:_
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     strategy: docker
     root: "/path/to/subdirectory"
 ```
@@ -114,8 +117,9 @@ _Using the **regex** strategy:_
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     strategy: regex # Optional since regex_pattern is defined
     root: "/path/to/subdirectory/my.file"
     regex_pattern: "version=([0-9\.])"
@@ -129,8 +133,9 @@ An optional attribute containing the regular expression used to extract the vers
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     regex_pattern: "version=([0-9\.]{5}([-\+][\w\.0-9]+)?)"
 ```
 
@@ -144,8 +149,9 @@ As of `1.1.2`, JavaScript named patterns are supported, where the group named `v
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     regex_pattern: "(version=)(?<version>[\d+\.]{3}([-\+][\w\.0-9]+)?)"
 ```
 
@@ -155,8 +161,9 @@ By default, [semantic versioning](https://semver.org/) is used, such as `1.0.0`.
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     tag_prefix: "v"
 ```
 
@@ -166,8 +173,9 @@ Text can be applied to the end of the tag by setting `tag_suffix`. For example, 
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     tag_suffix: " (beta)"
 ```
 
@@ -177,8 +185,9 @@ This is the annotated commit message associated with the tag. By default, a chan
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     tag_message: "Custom message goes here."
 ```
 
@@ -188,8 +197,9 @@ By default, a changelog is generated, containing the commit messages since the l
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     commit_message_template: "({{sha}} by {{author}}) {{message}}"
 ```
 
@@ -220,8 +230,9 @@ Useful for projects where the version number may be output by a previous action.
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  with:
     version: "${{ steps.previous_step.outputs.version }}"
 ```
 
