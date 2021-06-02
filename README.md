@@ -225,6 +225,19 @@ Useful for projects where the version number may be output by a previous action.
     version: "${{ steps.previous_step.outputs.version }}"
 ```
 
+### dry_run
+
+If this value is true, the tag will not be pushed.
+You can check for duplicate versions when creating a pull request.
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    dry_run: true
+```
+
+
 ## Developer Notes
 
 If you are building an action that runs after this one, be aware this action produces several [outputs](https://help.github.com/en/articles/metadata-syntax-for-github-actions#outputs):
