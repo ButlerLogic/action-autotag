@@ -30,6 +30,10 @@ export default class Tag {
     }
   }
 
+  get message() {
+    return this._message || ''
+  }
+
   get sha () {
     return this._sha || ''
   }
@@ -63,6 +67,7 @@ export default class Tag {
       }
 
       const changelog = await github.repos.compareCommits({ owner, repo, base: tags.shift().name, head: 'master' })
+
       const tpl = (core.getInput('commit_message_template', { required: false }) || '').trim()
 
       return changelog.data.commits
@@ -125,11 +130,12 @@ export default class Tag {
 
     if (!tagexists) {
       // Create tag
+      const message = await this.getMessage()
       const newTag = await github.git.createTag({
         owner,
         repo,
         tag: this.name,
-        message: await this.getMessage(),
+        message,
         object: process.env.GITHUB_SHA,
         type: 'commit'
       })
@@ -160,6 +166,7 @@ export default class Tag {
 
       this._uri = newReference.data.url
       this._ref = newReference.data.ref
+      this._message = message;
 
       core.warning(`Reference ${newReference.data.ref} available at ${newReference.data.url}` + os.EOL)
     } else {

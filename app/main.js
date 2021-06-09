@@ -72,8 +72,8 @@ async function run () {
       return
     }
 
-    // // The tag setter will autocorrect the message if necessary.
-    // tag.message = core.getInput('tag_message', { required: false }).trim()
+    // The tag setter will autocorrect the message if necessary.
+    tag.message = core.getInput('tag_message', { required: false }).trim()
     await tag.push()
 
     core.setOutput('tagname', tag.name)
