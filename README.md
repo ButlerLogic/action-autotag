@@ -3,6 +3,7 @@
 This action will auto-generate a Github tag whenever a new version is detected. The following "detection strategies" are available:
 
 1. **package**: Monitor a `package.json` for new versions.
+1. **composer**: Monitor a `composer.json` for new versions.
 1. **docker**: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value.
 1. **regex**: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
 
@@ -69,6 +70,7 @@ There are several options to customize how the tag is created.
 This is the strategy used to identify the version number/tag from within the code base.
 
 1. _package_: Monitor a `package.json` for new versions. Use this for JavaScript projects based on Node modules (npm, yarn, etc).
+1. _composer_: Monitor a `composer.json` for new versions. Use this for PHP projects based on Composer packages.
 1. _docker_: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value. USe this for container projects.
 1. _regex*_: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
 
@@ -84,7 +86,7 @@ This is the strategy used to identify the version number/tag from within the cod
 ### root
 _Formerly `package_root`_
 
-Depending on the selected strategy, autotagger will look for the `package.json` or `Dockerfile` file in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
+Depending on the selected strategy, autotagger will look for the `package.json`, `composer.json` or `Dockerfile` file in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
 
 _Using the **package** strategy:_
 
@@ -97,6 +99,18 @@ _Using the **package** strategy:_
 ```
 
 The version number would be extracted from `/path/to/subdirectory/package.json`.
+
+_Using the **composer** strategy:_
+
+```yaml
+- uses: butlerlogic/action-autotag@1.0.0
+  with:
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    strategy: composer
+    root: "/path/to/subdirectory"
+```
+
+The version number would be extracted from `/path/to/subdirectory/composer.json`.
 
 _Using the **docker** strategy:_
 

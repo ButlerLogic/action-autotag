@@ -5,6 +5,7 @@ import Package from './lib/package.js'
 import Tag from './lib/tag.js'
 import Regex from './lib/regex.js'
 import Dockerfile from './lib/docker.js'
+import Composer from "./lib/composer.js";
 
 async function run () {
   try {
@@ -34,12 +35,16 @@ async function run () {
         version = (new Package(root)).version
         break
 
+      case 'composer':
+        version = (new Composer(root)).version
+        break
+
       case 'regex':
         version = (new Regex(root, new RegExp(pattern, 'gim'))).version
         break
 
       default:
-        core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp).`)
+        core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'composer' (uses composer.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp).`)
         return
     }
 

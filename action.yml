@@ -10,7 +10,7 @@ inputs:
     required: false
     default: './'
   strategy:
-    description: Options include 'package' (for package.json), 'docker' (for Dockerfile), and 'regex' to extract from an arbitrary file. This does not need to be specified if the "regex_pattern" property is provided.
+    description: Options include 'package' (for package.json), 'docker' (for Dockerfile), 'composer' (for composer.json) and 'regex' to extract from an arbitrary file. This does not need to be specified if the "regex_pattern" property is provided.
     required: false
     default: 'package'
   package_root:
