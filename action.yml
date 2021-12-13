@@ -1,21 +1,22 @@
-name: "Autotagger"
+name: "Commit Autotag"
 description: "Automatically generate new tags for new versions. Supports several tagging strategies."
-author: "Butler Logic"
+author: "Bullrich"
 branding:
   icon: "tag"
-  color: "blue"
+  color: "green"
 inputs:
   root:
     description: Autotag will look for the appropriate file in in this location (relative to project root).
     required: false
     default: './'
+  head_branch:
+    description: 'Head branch to compare changes. It uses master by default'
+    required: false
+    default: 'master'
   strategy:
     description: Options include 'package' (for package.json), 'docker' (for Dockerfile), and 'regex' to extract from an arbitrary file. This does not need to be specified if the "regex_pattern" property is provided.
     required: false
     default: 'package'
-  package_root:
-    description: (DEPRECATED. Use 'root' instead.) Autotag will look for the package.json file in in this location.
-    required: false
   tag_prefix:
     description: By default, package.json uses semantic versioning, such as "1.0.0". A prefix can be used to add text before the tag name. For example, if tag_prefx is set to "v", then the tag would be labeled as "v1.0.0".
     required: false
@@ -44,15 +45,15 @@ outputs:
   tagmessage:
     description: The messge applied to the tag reference (this is what shows up on the tag screen on Github).
   tagcreated:
-    description: A "yes" or "no", indicating a new tag was created.
+    description: A true or false, indicating a new tag was created.
   tagrequested:
     description: The name of the requested tag. This will be populated even if the tag is not created.
   version:
     description: The version, as defined in package.json or explicitly set in the input.
   prerelease:
-    description: \"yes\" or \"no\", indicating the tag represents a semantic version pre-release.
+    description: true or false, indicating the tag represents a semantic version pre-release.
   build:
-    description: \"yes\" or \"no\", indicating the tag represents a semantic version build.
+    description: true or false, indicating the tag represents a semantic version build.
 runs:
   using: 'docker'
   image: 'Dockerfile'
