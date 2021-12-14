@@ -1,4 +1,4 @@
-import * as core from '@actions/core';
+import { getInput, warning } from '@actions/core';
 import { RestEndpointMethodTypes } from '@octokit/rest';
 import { EOL } from 'os';
 import { GitHub, repo } from '.';
@@ -55,7 +55,7 @@ export default class Tag {
       }
       const basehead = `${base}...${headBranch()}`;
       const changelog = await this.github.rest.repos.compareCommitsWithBasehead({ owner, repo, basehead });
-      const tpl = (core.getInput('commit_message_template', { required: false }) || '').trim();
+      const tpl = (getInput('commit_message_template', { required: false }) || '').trim();
 
       return changelog.data.commits
         .map(
@@ -76,7 +76,7 @@ export default class Tag {
           })
         .join('\n');
     } catch (e) {
-      core.warning('Failed to generate changelog from commits: ' + (e as { message: string }).message + EOL);
+      warning('Failed to generate changelog from commits: ' + (e as { message: string }).message + EOL);
       return `Version ${this.version}`;
     }
   }
@@ -128,7 +128,7 @@ export default class Tag {
       });
 
       this.sha = newTag.data.sha;
-      core.warning(`Created new tag: ${newTag.data.tag}`);
+      warning(`Created new tag: ${newTag.data.tag}`);
 
       // Create reference
       let newReference;
@@ -141,7 +141,7 @@ export default class Tag {
           sha: newTag.data.sha
         });
       } catch (e) {
-        core.warning(JSON.stringify({
+        warning(JSON.stringify({
           owner,
           repo,
           ref: `refs/tags/${newTag.data.tag}`,
@@ -154,9 +154,9 @@ export default class Tag {
       this.uri = newReference.data.url;
       this.ref = newReference.data.ref;
 
-      core.warning(`Reference ${newReference.data.ref} available at ${newReference.data.url}` + EOL);
+      warning(`Reference ${newReference.data.ref} available at ${newReference.data.url}` + EOL);
     } else {
-      core.warning('Cannot push tag (it already exists).');
+      warning('Cannot push tag (it already exists).');
     }
   }
 

@@ -4,11 +4,12 @@
   "description": "Automatically create a tag whenever the version changes in package.json",
   "main": "dist/main.js",
   "engines": {
-    "node": ">=17"
+    "node": ">=14"
   },
   "scripts": {
     "start": "node dist/main.js",
     "build": "tsc",
+    "pack": "rm -rf build dist && npm run build && ncc build --source-map --license licenses.txt -o build",
     "test": "jest",
     "test:lint": "eslint --max-warnings=0 --ext ts,tsx src"
   },
@@ -37,6 +38,7 @@
     "@types/node": "^16.11.12",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
+    "@vercel/ncc": "^0.33.0",
     "eslint": "^8.4.1",
     "eslint-plugin-github": "^4.3.5",
     "jest": "^27.4.4",

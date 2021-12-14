@@ -1,7 +1,17 @@
-FROM node:17-alpine
-LABEL version=1.0.0
+FROM node:14-alpine as Builder
+
+WORKDIR /action
+
 COPY package.json package-lock.json tsconfig.json ./
+
 RUN npm ci
+
 ADD src ./src
-RUN npm run build
-CMD ["node", "dist/main.js"]
+
+RUN npm run pack
+
+FROM node:14-slim
+
+COPY --from=Builder /action/build /action
+
+CMD ["node", "/action/index.js"]
