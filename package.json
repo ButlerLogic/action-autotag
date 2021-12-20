@@ -15,18 +15,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bullrich/commit-autotag.git"
+    "url": "git+https://github.com/ButlerLogic/action-autotag.git"
   },
   "bugs": {
-    "url": "https://github.com/Bullrich/commit-autotag/issues"
+    "url": "https://github.com/ButlerLogic/action-autotag/issues"
   },
-  "homepage": "https://github.com/Bullrich/commit-autotag#readme",
+  "homepage": "https://github.com/ButlerLogic/action-autotag#readme",
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "Javier Bullrich",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.6.0",

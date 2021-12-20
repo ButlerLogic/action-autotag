@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: bullrich/commit-autotag@main
+    - uses: butlerlogic/action-autotag@main
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
@@ -56,7 +56,7 @@ This **order** is important!
 
 ```yaml
 - uses: actions/checkout@v2
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
 ```
 
 > If the repository is not checked out first, the autotagger cannot find the package.json file.
@@ -88,7 +88,7 @@ This is the strategy used to identify the version number/tag from within the cod
 > **EXCEPTION**: This property is _not_ required if the `regex_pattern` property is defined, because it is assumed to be "regex".
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     strategy: docker
@@ -101,7 +101,7 @@ Depending on the selected strategy, autotagger will look for the `package.json` 
 _Using the **package** strategy:_
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     strategy: package # Optional, since "package" is the default strategy
@@ -113,7 +113,7 @@ The version number would be extracted from `/path/to/subdirectory/package.json`.
 _Using the **docker** strategy:_
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     strategy: docker
@@ -125,7 +125,7 @@ The version number would be extracted from `/path/to/subdirectory/Dockerfile`, s
 _Using the **regex** strategy:_
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     strategy: regex # Optional since regex_pattern is defined
@@ -140,7 +140,7 @@ The version will be extracted by scanning the content of `/path/to/subdirectory/
 An optional attribute containing the regular expression used to extract the version number.
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     regex_pattern: "version=([0-9\.]{5}([-\+][\w\.0-9]+)?)"
@@ -155,7 +155,7 @@ The pattern described in this example is a simple one used. If you need a more c
 As of `1.1.2`, JavaScript named patterns are supported, where the group named `version` will be used to populate the tag. For example:
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     regex_pattern: "(version=)(?<version>[\d+\.]{3}([-\+][\w\.0-9]+)?)"
@@ -166,7 +166,7 @@ As of `1.1.2`, JavaScript named patterns are supported, where the group named `v
 By default, [semantic versioning](https://semver.org/) is used, such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefix` is set to `v`, then the tag would be labeled as `v1.0.0`.
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     tag_prefix: "v"
@@ -177,7 +177,7 @@ By default, [semantic versioning](https://semver.org/) is used, such as `1.0.0`.
 Text can be applied to the end of the tag by setting `tag_suffix`. For example, if `tag_suffix` is ` (beta)`, the tag would be `1.0.0 (beta)`. Please note this example violates semantic versioning and is merely here to illustrate how to add text to the end of a tag name if you _really_ want to.
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     tag_suffix: " (beta)"
@@ -188,7 +188,7 @@ Text can be applied to the end of the tag by setting `tag_suffix`. For example, 
 This is the annotated commit message associated with the tag. By default, a changelog will be generated from the commits between the latest tag and the current reference (HEAD). Setting this option will override the message.
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     tag_message: "Custom message goes here."
@@ -199,7 +199,7 @@ This is the annotated commit message associated with the tag. By default, a chan
 By default the action compares changes against the `master` branch when creating the changelog in `tag_message`. You can compare it with a different branch by setting it up.
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     head_branch: develop
@@ -210,7 +210,7 @@ By default the action compares changes against the `master` branch when creating
 By default, a changelog is generated, containing the commit messages since the last release. The message is generated by applying a commit message template to each commit's data attributes.
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     commit_message_template: "({{sha}} by {{author}}) {{message}}"
@@ -242,7 +242,7 @@ Explicitly set the version instead of using automatic detection.
 Useful for projects where the version number may be output by a previous action.
 
 ```yaml
-- uses: bullrich/commit-autotag@main
+- uses: butlerlogic/action-autotag@main
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     version: "${{ steps.previous_step.outputs.version }}"
