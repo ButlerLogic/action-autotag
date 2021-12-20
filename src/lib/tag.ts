@@ -93,8 +93,8 @@ export default class Tag {
     return this.tags.data;
   }
 
-  async exists() {
-    if (this.doesExist !== null) {
+  async exists(): Promise<boolean> {
+    if (this.doesExist) {
       return this.doesExist;
     }
     const currentTag = this.name;

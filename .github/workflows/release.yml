@@ -1,0 +1,50 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tagname: ${{ steps.autotag.outputs.tagname }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bullrich/commit-autotag@main
+      id: autotag
+      with:
+        tag_prefix: "v"
+        head_branch: main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release-version:
+    runs-on: ubuntu-latest
+    needs: [tag]
+    # important, only triggers if tag was created
+    if: needs.tag.outputs.tagname != ''
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: Changelog
+        env:
+          REPO: ${{ github.repository }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            ## Changes
+            ${{ steps.Changelog.outputs.changelog }}
+          draft: false
+          prerelease: false

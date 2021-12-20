@@ -1,0 +1,6 @@
+{
+    "jest.jestCommandLine": "jest",
+    "files.exclude": {
+        "dist/**": true
+    }
+}

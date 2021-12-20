@@ -1,0 +1,28 @@
+name: Continuous testing
+
+on:
+  pull_request:
+    types: [
+      'opened',
+      'synchronize'
+    ]
+  push:
+    branches:
+      - main
+
+jobs:
+  test-action:
+    name: Action test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use node 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: install
+        run: npm ci
+      - name: test
+        run: npm run test
+      - name: build
+        run: npm run build

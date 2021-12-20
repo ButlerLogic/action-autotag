@@ -1,9 +1,4 @@
-logs
-*.log
-*.log*
-.*
-!.gitignore
-!.github
-!.dockerignore
-_*
-node_modules
+/node_modules
+.DS_Store
+/dist
+/build

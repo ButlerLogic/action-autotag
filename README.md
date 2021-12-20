@@ -1,10 +1,10 @@
 # Autotag
 
-This action is a rewrite from [butlerlogic/action-autotag](https://github.com/butlerlogic/action-autotag).
+![Continuous testing](https://github.com/ButlerLogic/action-autotag/workflows/Continuous%20testing/badge.svg?event=push)
+
+## New features in version 2
 
 Logic has been adapted, dependencies have been updated and the language has been rewriten in Typescript (and tests have been added).
-
-## Key differences
 
 - Supports self hosted GitHub Enterprise instances.
 - Code is written in Typescript.

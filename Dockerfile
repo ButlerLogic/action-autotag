@@ -10,7 +10,7 @@ ADD src ./src
 
 RUN npm run pack
 
-FROM node:14-slim
+FROM node:14-alpine
 
 COPY --from=Builder /action/build /action
 
