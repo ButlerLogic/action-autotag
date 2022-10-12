@@ -225,7 +225,14 @@ Useful for projects where the version number may be output by a previous action.
     version: "${{ steps.previous_step.outputs.version }}"
 ```
 
-### dry_run
+### minVersion
+
+Set the minimum version which would be used to create a tag. 
+
+The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also be used when introducing Autotag to a repository which has already tagged.
+
+For example, if the version `0.1.0` would already have been published, set the `minVersion` to the next patch to prevent a duplicate tag for that version.
+
 
 If this value is true, the tag will not be pushed.
 You can check for duplicate versions when creating a pull request.
@@ -234,9 +241,8 @@ You can check for duplicate versions when creating a pull request.
 - uses: butlerlogic/action-autotag@1.0.0
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-    dry_run: true
+    minVersion: "0.1.1"
 ```
-
 
 ## Developer Notes
 
