@@ -233,6 +233,10 @@ The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also
 
 For example, if the version `0.1.0` would already have been published, set the `minVersion` to the next patch to prevent a duplicate tag for that version.
 
+
+If this value is true, the tag will not be pushed.
+You can check for duplicate versions when creating a pull request.
+
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
   with:

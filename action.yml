@@ -38,6 +38,9 @@ inputs:
   regex_pattern:
     description: An optional attribute containing the regular expression used to extract the version number.
     required: false
+  dry_run:
+    description: If this value is true, the tag will not be pushed.
+    required: false
 outputs:
   tagname:
     description: Returns the new tag value. Empty if a tag is not created.
