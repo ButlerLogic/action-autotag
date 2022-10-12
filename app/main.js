@@ -29,16 +29,16 @@ async function run () {
 
     switch (strategy) {
       case 'docker':
-        version = (new Dockerfile(root)).version
+        version = version || (new Dockerfile(root)).version
         break
 
       case 'package':
         // Extract using the package strategy (this is the default strategy)
-        version = (new Package(root)).version
+        version = version || (new Package(root)).version
         break
 
       case 'regex':
-        version = (new Regex(root, new RegExp(pattern, 'gim'))).version
+        version = version || (new Regex(root, new RegExp(pattern, 'gim'))).version
         break
 
       default:
