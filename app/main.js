@@ -20,7 +20,7 @@ async function run () {
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || (strategy === 'composer' ? 'composer.json' : null)
 
     // If this value is true, the tag will not be pushed
-    const isDryRun = core.getBooleanInput('dry_run', { required: false });
+    const isDryRun = (core.getInput('dry_run', { required: false }) || '').trim().toLowerCase() === 'true'
 console.log({isDryRun})
 
     // Extract the version number using the supplied strategy
