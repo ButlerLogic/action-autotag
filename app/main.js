@@ -17,7 +17,7 @@ async function run () {
 
     // Identify the tag parsing strategy
     const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
-    const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || (strategy === 'composer' ? 'composer.json' : './')
+    const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || (strategy === 'composer' ? 'composer.json' : null)
 
     // If this value is true, the tag will not be pushed
     const isDryRun = core.getInput('dry_run', { required: false });
@@ -29,13 +29,13 @@ async function run () {
 
     switch (strategy) {
       case 'docker':
-        version = version || (new Dockerfile(root)).version
+        version = version || (new Dockerfile(root || './')).version
         break
 
       case 'composer':
       case 'package':
         // Extract using the package strategy (this is the default strategy)
-        version = version || (new Package(root)).version
+        version = version || (new Package(root || './package.json')).version
         break
 
       case 'regex':
@@ -104,8 +104,6 @@ async function run () {
     if (isDryRun !== "true") {
       await tag.push()
       core.setOutput('tagcreated', 'yes')
-    } else {
-      core.setOutput('tagcreated', 'no')
     }
 
     core.setOutput('tagname', tag.name)
