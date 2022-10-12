@@ -21,6 +21,7 @@ async function run () {
 
     // If this value is true, the tag will not be pushed
     const isDryRun = core.getBooleanInput('dry_run', { required: false });
+console.log({isDryRun})
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
