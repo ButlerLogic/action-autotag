@@ -61,5 +61,5 @@ outputs:
   build:
     description: \"yes\" or \"no\", indicating the tag represents a semantic version build.
 runs:
-  using: 'node16'
-  main: 'app/main.js'
+  using: "node16"
+  main: "app/main.js"
