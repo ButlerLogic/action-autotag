@@ -225,7 +225,7 @@ Useful for projects where the version number may be output by a previous action.
     version: "${{ steps.previous_step.outputs.version }}"
 ```
 
-### minVersion
+### min_version
 
 Set the minimum version which would be used to create a tag. 
 
@@ -237,10 +237,10 @@ For example, if the version `0.1.0` would already have been published, set the `
 - uses: butlerlogic/action-autotag@1.0.0
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-    minVersion: "0.1.1"
+    min_version: "0.1.1"
 ```
 
-### Dry Run
+### dry_run
 If this value is true, the tag will not be pushed.
 You can check for duplicate versions when creating a pull request.
 
@@ -248,7 +248,7 @@ You can check for duplicate versions when creating a pull request.
 - uses: butlerlogic/action-autotag@1.0.0
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-    dryRun: true
+    dry_run: true
 ```
 
 
