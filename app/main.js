@@ -16,8 +16,8 @@ async function run () {
     core.setOutput('tagcreated', 'no')
 
     // Identify the tag parsing strategy
-    const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || './'
     const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
+    const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || (strategy === 'composer' ? 'composer.json' : './')
 
     // If this value is true, the tag will not be pushed
     const isDryRun = core.getInput('dry_run', { required: false });
@@ -32,6 +32,7 @@ async function run () {
         version = version || (new Dockerfile(root)).version
         break
 
+      case 'composer':
       case 'package':
         // Extract using the package strategy (this is the default strategy)
         version = version || (new Package(root)).version
@@ -42,7 +43,7 @@ async function run () {
         break
 
       default:
-        core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp).`)
+        core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'composer' (composer.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp).`)
         return
     }
 
@@ -53,7 +54,7 @@ async function run () {
     }
 
     const minVersion = core.getInput('min_version', { required: false })
-    
+
     // Ensure that version and minVersion are valid SemVer strings
     const minVersionSemVer = semver.coerce(minVersion)
     const versionSemVer = semver.coerce(version)
@@ -63,7 +64,7 @@ async function run () {
     if(!versionSemVer) {
       core.warning(`Skipping min version check. ${version} is not valid SemVer`)
     }
-    
+
     if (minVersionSemVer && versionSemVer && semver.lt(versionSemVer, minVersionSemVer)) {
       core.warning(`Version "${version}" is lower than minimum "${minVersion}"`)
       return
@@ -102,13 +103,16 @@ async function run () {
 
     if (isDryRun !== "true") {
       await tag.push()
+      core.setOutput('tagcreated', 'yes')
+    } else {
+      core.setOutput('tagcreated', 'no')
     }
+
     core.setOutput('tagname', tag.name)
     core.setOutput('tagsha', tag.sha)
     core.setOutput('taguri', tag.uri)
     core.setOutput('tagmessage', tag.message)
     core.setOutput('tagref', tag.ref)
-    core.setOutput('tagcreated', 'yes')
   } catch (error) {
     core.warning(error.message)
     core.warning(error.stack)
