@@ -1,4 +1,4 @@
-import core from '@actions/core'
+import * as core from '@actions/core'
 import os from 'os'
 import semver from 'semver'
 import Setup from './lib/setup.js'
@@ -61,17 +61,17 @@ async function run () {
     // Ensure that version and minVersion are valid SemVer strings
     const minVersionSemVer = semver.coerce(minVersion)
     if (!minVersionSemVer) {
-      core.warning(`Skipping min version check. ${minVersion} is not valid SemVer`)
+      core.info(`Skipping min version check. ${minVersion} is not valid SemVer`)
     }
     if(!versionSemVer) {
-      core.warning(`Skipping min version check. ${version} is not valid SemVer`)
+      core.info(`Skipping min version check. ${version} is not valid SemVer`)
     }
     if (minVersionSemVer && versionSemVer && semver.lt(versionSemVer, minVersionSemVer)) {
-      core.warning(`Version "${version}" is lower than minimum "${minVersion}"`)
+      core.info(`Version "${version}" is lower than minimum "${minVersion}"`)
       return
     }
 
-    core.warning(`Recognized "${version}"${msg}`)
+    core.notice(`Recognized "${version}"${msg}`)
     core.setOutput('version', version)
     core.debug(` Detected version ${version}`)
 
@@ -83,9 +83,9 @@ async function run () {
     )
 
     if (isDryRun) {
-      core.warning(`"${tag.name}" tag is not pushed because the dry_run option was set.`)
+      core.notice(`"${tag.name}" tag was not pushed because the dry_run option was set.`)
     } else {
-      core.warning(`Attempting to create ${tag.name} tag.`)
+      core.info(`Attempting to create ${tag.name} tag.`)
     }
 
     core.setOutput('tagrequested', tag.name)
