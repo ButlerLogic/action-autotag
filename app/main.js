@@ -52,7 +52,7 @@ async function run () {
       throw new Error(`No version identified${msg}`)
     }
 
-    const minVersion = core.getInput('minVersion', { required: false })
+    const minVersion = core.getInput('min_version', { required: false })
     
     // Ensure that version and minVersion are valid SemVer strings
     const minVersionSemVer = semver.coerce(minVersion)
