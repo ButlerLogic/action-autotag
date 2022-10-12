@@ -20,7 +20,7 @@ async function run () {
     const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
 
     // If this value is true, the tag will not be pushed
-    const isDryRun = core.getInput('dryRun', { required: false });
+    const isDryRun = core.getInput('dry_run', { required: false });
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
@@ -81,7 +81,7 @@ async function run () {
     )
 
     if (isDryRun === "true") {
-      core.warning(`"${tag.name}" tag is not pushed because the dryRun option was set.`)
+      core.warning(`"${tag.name}" tag is not pushed because the dry_run option was set.`)
     } else {
       core.warning(`Attempting to create ${tag.name} tag.`)
     }
