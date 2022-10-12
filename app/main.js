@@ -20,7 +20,7 @@ async function run () {
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || (strategy === 'composer' ? 'composer.json' : null)
 
     // If this value is true, the tag will not be pushed
-    const isDryRun = core.getInput('dry_run', { required: false });
+    const isDryRun = core.getBooleanInput('dry_run', { required: false });
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
@@ -81,7 +81,7 @@ async function run () {
       core.getInput('tag_suffix', { required: false })
     )
 
-    if (isDryRun === "true") {
+    if (isDryRun) {
       core.warning(`"${tag.name}" tag is not pushed because the dry_run option was set.`)
     } else {
       core.warning(`Attempting to create ${tag.name} tag.`)
@@ -101,7 +101,7 @@ async function run () {
     // The tag setter will autocorrect the message if necessary.
     tag.message = core.getInput('tag_message', { required: false }).trim()
 
-    if (isDryRun !== "true") {
+    if (!isDryRun) {
       await tag.push()
       core.setOutput('tagcreated', 'yes')
     }
