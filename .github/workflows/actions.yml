@@ -46,6 +46,7 @@ jobs:
         with:
           strategy: docker
           tag_prefix: test_docker_
+          root: ./test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
