@@ -2,7 +2,8 @@
 
 This action will auto-generate a Github tag whenever a new version is detected. The following "detection strategies" are available:
 
-1. **package**: Monitor a `package.json` for new versions.
+1. **package**: Monitor a `package.json` file for new versions.
+1. **composer**: Monitor a `composer.json` file for new versions.
 1. **docker**: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value.
 1. **regex**: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
 
@@ -238,7 +239,7 @@ Useful for projects where the version number may be output by a previous action.
 
 ### min_version
 
-Set the minimum version which would be used to create a tag. 
+Set the minimum version which would be used to create a tag.
 
 The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also be used when introducing Autotag to a repository which has already tagged.
 
