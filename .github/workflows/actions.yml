@@ -7,7 +7,7 @@ on:
 
 jobs:
   package:
-    name: Test Suite - Package Strategy
+    name: Package Strategy
     runs-on: ubuntu-latest
     steps:
         # Checkout updated source code
@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   docker:
-    name: Test Suite - Docker Strategy
+    name: Docker Strategy
     runs-on: ubuntu-latest
     steps:
         # Checkout updated source code
