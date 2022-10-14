@@ -16,8 +16,11 @@ async function run () {
     core.setOutput('tagcreated', 'no')
 
     // Identify the tag parsing strategy
-    const versionSupplied = core.getInput('root', { required: false }) !== null && core.getInput('root', { required: false }).trim().length > 0
+    // Use manual strategy if a version is supplied in the action config
+    const versionSupplied = core.getInput('root', { required: false }) !== null && core.getInput('root', { required: false }) !== undefined && core.getInput('root', { required: false }).trim().length > 0
     const strategy = versionSupplied ? 'manual' : (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
+
+    // Identify the root directory to use for auto-identifying a tag version
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || (strategy === 'composer' ? './composer.json' : './')
 
     // If this value is true, the tag will not be pushed
@@ -26,8 +29,11 @@ async function run () {
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
     version = version === null || version.trim().length === v0 ? null : version
+
+    // If Regex strategy is specified, retrieve the Regex pattern
     const pattern = core.getInput('regex_pattern', { required: false })
 
+    // Identify the version by strategy
     switch (strategy) {
       case 'docker':
         version = (new Dockerfile(root)).version
@@ -44,11 +50,11 @@ async function run () {
         break
 
       case 'manual':
-        core.notice(`version "${version}" was manually specified in the action configuration`)
+        core.notice(`"${version}" version was manually specified in the action configuration`)
         break
 
       default:
-        core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'composer' (composer.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp).`)
+        core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'composer' (composer.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp). Specify a version to use the "manual" strategy.`)
         return
     }
 
@@ -62,12 +68,15 @@ async function run () {
     const minVersion = core.getInput('min_version', { required: false })
     const versionSemVer = semver.coerce(version)
     const minVersionSemVer = semver.coerce(minVersion)
+
     if (!minVersionSemVer) {
       core.info(`Skipping min version check. ${minVersion} is not valid SemVer`)
     }
+
     if(!versionSemVer) {
       core.info(`Skipping min version check. ${version} is not valid SemVer`)
     }
+
     if (minVersionSemVer && versionSemVer && semver.lt(versionSemVer, minVersionSemVer)) {
       core.info(`Version "${version}" is lower than minimum "${minVersion}"`)
       return
