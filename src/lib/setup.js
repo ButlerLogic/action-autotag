@@ -1,5 +1,5 @@
 import core from '@actions/core'
-import fs from 'fs'
+import { readdirSync } from 'fs'
 import path from 'path'
 
 export default class Setup {
@@ -11,8 +11,7 @@ export default class Setup {
         .join('\n -> ')}`
     )
 
-    const dir = fs
-      .readdirSync(path.resolve(process.env.GITHUB_WORKSPACE), { withFileTypes: true })
+    const dir = readdirSync(path.resolve(process.env.GITHUB_WORKSPACE), { withFileTypes: true })
       .map(entry => {
         return `${entry.isDirectory() ? '> ' : '  - '}${entry.name}`
       })

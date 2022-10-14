@@ -1,19 +1,19 @@
-import fs from 'fs'
-import path from 'path'
+import { statSync, readFileSync } from 'fs'
+import { resolve } from 'path'
 
 export default class Regex {
   constructor (root = './', pattern) {
-    root = path.resolve(root)
+    root = resolve(root)
 
-    if (fs.statSync(root).isDirectory()) {
+    if (statSync(root).isDirectory()) {
       throw new Error(`${root} is a directory. The Regex tag identification strategy requires a file.`)
     }
 
-    if (!fs.existsSync(root)) {
+    if (!existsSync(root)) {
       throw new Error(`"${root}" does not exist.`)
     }
 
-    this.content = fs.readFileSync(root).toString()
+    this.content = readFileSync(root).toString()
 
     let content = pattern.exec(this.content)
     if (!content) {
