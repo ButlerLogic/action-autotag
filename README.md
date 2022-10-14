@@ -6,6 +6,7 @@ This action will auto-generate a Github tag whenever a new version is detected. 
 1. **composer**: Monitor a `composer.json` file for new versions.
 1. **docker**: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value.
 1. **regex**: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
+1. _**manual**_: Manually supply the version number (no need to specify this strategy, just specify the version).
 
 When a version is detected, it is compared to the current list of tags in the Github repository. If a tag does not exist, it will be created.
 
@@ -70,7 +71,8 @@ There are several options to customize how the tag is created.
 This is the strategy used to identify the version number/tag from within the code base.
 
 1. _package_: Monitor a `package.json` for new versions. Use this for JavaScript projects based on Node modules (npm, yarn, etc).
-1. _docker_: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value. USe this for container projects.
+1. _composer_: Same as package, but uses `composer.json` instead of package.json.
+1. _docker_: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value. Use this for container projects.
 1. _regex*_: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
 
 > **EXCEPTION**: This property is _not_ required if the `regex_pattern` property is defined, because it is assumed to be "regex".
@@ -225,7 +227,7 @@ _Example output:_
 
 ### version
 
-Explicitly set the version instead of using automatic detection.
+Explicitly set the version instead of using automatic detection (forces "manual" strategy).
 
 Useful for projects where the version number may be output by a previous action.
 
