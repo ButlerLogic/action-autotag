@@ -16,7 +16,8 @@ async function run () {
     core.setOutput('tagcreated', 'no')
 
     // Identify the tag parsing strategy
-    const strategy = (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
+    const versionSupplied = core.getInput('root', { required: false }) !== null && core.getInput('root', { required: false }).trim().length > 0
+    const strategy = versionSupplied ? 'manual' : (core.getInput('regex_pattern', { required: false }) || '').trim().length > 0 ? 'regex' : ((core.getInput('strategy', { required: false }) || 'package').trim().toLowerCase())
     const root = core.getInput('root', { required: false }) || core.getInput('package_root', { required: false }) || (strategy === 'composer' ? './composer.json' : './')
 
     // If this value is true, the tag will not be pushed
@@ -24,30 +25,31 @@ async function run () {
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
-    version = version === null || version.trim().length === 0 ? null : version
+    version = version === null || version.trim().length === v0 ? null : version
     const pattern = core.getInput('regex_pattern', { required: false })
-    const versionSemVer = semver.coerce(version)
 
-    if (!versionSemVer) {
-      switch (strategy) {
-        case 'docker':
-          version = (new Dockerfile(root)).version
-          break
+    switch (strategy) {
+      case 'docker':
+        version = (new Dockerfile(root)).version
+        break
 
-        case 'composer':
-        case 'package':
-          // Extract using the package strategy (this is the default strategy)
-          version = (new Package(root)).version
-          break
+      case 'composer':
+      case 'package':
+        // Extract using the package strategy (this is the default strategy)
+        version = (new Package(root)).version
+        break
 
-        case 'regex':
-          version = (new Regex(root, new RegExp(pattern, 'gim'))).version
-          break
+      case 'regex':
+        version = (new Regex(root, new RegExp(pattern, 'gim'))).version
+        break
 
-        default:
-          core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'composer' (composer.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp).`)
-          return
-      }
+      case 'manual':
+        core.notice(`version "${version}" was manually specified in the action configuration`)
+        break
+
+      default:
+        core.setFailed(`"${strategy}" is not a recognized tagging strategy. Choose from: 'package' (package.json), 'composer' (composer.json), 'docker' (uses Dockerfile), or 'regex' (JS-based RegExp).`)
+        return
     }
 
     const msg = ` using the ${strategy} extraction${strategy === 'regex' ? ' with the /' + pattern + '/gim pattern.' : ''}.`
@@ -56,9 +58,9 @@ async function run () {
       throw new Error(`No version identified${msg}`)
     }
 
-    const minVersion = core.getInput('min_version', { required: false })
-
     // Ensure that version and minVersion are valid SemVer strings
+    const minVersion = core.getInput('min_version', { required: false })
+    const versionSemVer = semver.coerce(version)
     const minVersionSemVer = semver.coerce(minVersion)
     if (!minVersionSemVer) {
       core.info(`Skipping min version check. ${minVersion} is not valid SemVer`)
@@ -113,8 +115,7 @@ async function run () {
     core.setOutput('tagmessage', tag.message)
     core.setOutput('tagref', tag.ref)
   } catch (error) {
-    core.warning(error.message)
-    core.warning(error.stack)
+    core.warning(error.message + '\n' + error.stack)
     core.setOutput('tagname', '')
     core.setOutput('tagsha', '')
     core.setOutput('taguri', '')
