@@ -56,7 +56,7 @@ The `GITHUB_TOKEN` **must** be provided. Without this, it is not possible to cre
 
 ```yaml
 - uses: butlerlogic/action-autotag@stable
-  with:
+  env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
 
