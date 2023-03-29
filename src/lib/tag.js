@@ -1,11 +1,12 @@
 import core from '@actions/core'
 import os from 'os'
-import gh from '@actions/github'
+import octokit from 'octokit@2.0.14'
 
 // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
-const github = new gh.GitHub(process.env.GITHUB_TOKEN || process.env.INPUT_GITHUB_TOKEN)
+const github = (new octokit({ auth: process.env.GITHUB_TOKEN || process.env.INPUT_GITHUB_TOKEN })).rest
+
 // Get owner and repo from context of payload that triggered the action
-const { owner, repo } = gh.context.repo
+const [ owner, repo ] = process.env.GITHUB_ACTION_REPOSITORY.split('/')
 
 export default class Tag {
   constructor (prefix, version, postfix) {
@@ -66,7 +67,7 @@ export default class Tag {
         return `Version ${this.version}`
       }
 
-      const changelog = await github.repos.compareCommits({ owner, repo, base: tags.shift().name, head: 'master' })
+      const changelog = await github.repos.compareCommits({ owner, repo, base: tags.shift().name, head: process.env.GITHUB_HEAD_REF ?? 'main' })
 
       const tpl = (core.getInput('commit_message_template', { required: false }) || '').trim()
 
