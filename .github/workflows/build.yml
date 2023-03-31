@@ -28,7 +28,7 @@ jobs:
         cd ./dist
         mkdir -p ./node_modules
         npm i
-        rm ./dist/package.json
+        rm ./package.json
 
     - name: Commit Build Artifacts
       env:
