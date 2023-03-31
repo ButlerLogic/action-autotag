@@ -9,8 +9,8 @@ import * as core from '@actions/core'
 
 async function run () {
   try {
-    Setup.debug()
-    Setup.requireAnyEnv('GITHUB_TOKEN', 'INPUT_GITHUB_TOKEN')
+    // Setup.debug()
+    // Setup.requireAnyEnv('GITHUB_TOKEN', 'INPUT_GITHUB_TOKEN')
 
     // Configure the default output
     core.setOutput('tagcreated', 'no')
