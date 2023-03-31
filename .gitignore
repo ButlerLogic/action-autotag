@@ -7,3 +7,5 @@ logs
 !.dockerignore
 _*
 node_modules
+!./src/node_modules
+dist

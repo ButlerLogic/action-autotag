@@ -1,21 +1,32 @@
 # Autotag
 
-This action will auto-generate a Github tag whenever a new version is detected. The following "detection strategies" are available:
+This action will generate a Github tag when a new version is detected.
 
-1. **package**: Monitor a `package.json` file for new versions.
-1. **composer**: Monitor a `composer.json` file for new versions.
-1. **docker**: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value.
+```mermaid
+graph LR
+  e[Detect/Extract<br/>Semantic Version]
+  e-->c[Compare<br/>to Existing Tags]
+  c-->d{Newer?}
+  d.->|No|Done
+  d.->|Yes|p[Create Tag]
+```
+
+There are several "detection strategies" to choose from:
+
+1. **package**: Extract from `package.json`.
+1. **composer**: Extract from `composer.json`.
+1. **docker**: Extract from `Dockerfile`, in search of a `LABEL version=x.x.x` value.
 1. **regex**: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
 1. _**manual**_: Manually supply the version number (no need to specify this strategy, just specify the version).
 
-When a version is detected, it is compared to the current list of tags in the Github repository. If a tag does not exist, it will be created.
+When a new version is detected, it is compared to the current tags in the Github repository. If the version is newer than other tags (or if no tags exist yet), the version will be used to create a new tag.
 
+### Tagging: Part of a Complete Deployment Solution
 This action works well in combination with:
 
 - [actions/create-release](https://github.com/actions/create-release) (Auto-release)
 - [author/action-publish](https://github.com/author/action-publish) (Auto-publish JavaScript/Node modules)
 - [author/action-rollback](https://github.com/author/action-rollback) (Auto-rollback releases on failures)
-- [author/template-cross-runtime](https://github.com/author/template-cross-runtime) (a cross-runtime JavaScript repo template)
 
 ## Usage
 
@@ -33,7 +44,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: butlerlogic/action-autotag@stable
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -48,7 +59,7 @@ This **order** is important!
 - uses: butlerlogic/action-autotag@stable
 ```
 
-> If the repository is not checked out first, the autotagger cannot find the package.json file.
+**If the repository is not checked out first, the autotagger cannot find the source files.**
 
 ## Configuration
 
@@ -62,7 +73,7 @@ The `GITHUB_TOKEN` **must** be provided. Without this, it is not possible to cre
 
 The action will automatically extract the token at runtime. **DO NOT MANUALLY ENTER YOUR TOKEN.** If you put the actual token in your workflow file, you'll make it accessible (in plaintext) to anyone who ever views the repository (it will be in your git history).
 
-## Optional Configurations
+## Optional Configuration Options
 
 There are several options to customize how the tag is created.
 
@@ -70,27 +81,26 @@ There are several options to customize how the tag is created.
 
 This is the strategy used to identify the version number/tag from within the code base.
 
-1. _package_: Monitor a `package.json` for new versions. Use this for JavaScript projects based on Node modules (npm, yarn, etc).
-1. _composer_: Same as package, but uses `composer.json` instead of package.json.
-1. _docker_: Monitor a `Dockerfile` for a `LABEL version=x.x.x` value. Use this for container projects.
-1. _regex*_: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
-
-> **EXCEPTION**: This property is _not_ required if the `regex_pattern` property is defined, because it is assumed to be "regex".
-
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
-    strategy: docker
+    strategy: <your_choice>
 ```
 
+1. _package_: Search `package.json` for new versions. Use this for JavaScript projects based on Node/Deno/Bun modules (npm, yarn, etc).
+1. _composer_: Same as package, but uses `composer.json` instead of package.json.
+1. _docker_: Search a `Dockerfile` for a `LABEL version=x.x.x` value. Use this for container projects.
+1. _regex*_: Use a JavaScript [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) with any file for your own custom extraction.
+
+> **EXCEPTION**: This property is _not_ required if the `regex_pattern` property (below) is defined, because it is assumed to be "regex".
+
 ### root
-_Formerly `package_root`_
 
-Depending on the selected strategy, autotagger will look for the `package.json` or `Dockerfile` file in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
+Depending on the selected strategy, autotagger will look for the confgured identify file (i.e. `package.json`, `composer.json`, `Dockerfile`, etc) in the project root. If the file is located in a subdirectory, this option can be used to point to the correct file.
 
-_Using the **package** strategy:_
+_Using the **package** (or composer) strategy:_
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
@@ -144,9 +154,11 @@ An optional attribute containing the regular expression used to extract the vers
 
 This attribute is used as the first argument of a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp) object. The first "group" (i.e. what's in the main set of parenthesis/the whole version number) will be used as the version number. For an example, see this [working example](https://regexr.com/51r8j).
 
-The pattern described in this example is a simple one used. If you need a more complex one [complete pattern](https://regex101.com/r/vkijKf/1/) is:
+The pattern described in this example is a simplistic one. If you need a more explicit one the [complete semver pattern](https://regex101.com/r/vkijKf/1/) is:
 
-`^((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$`
+```
+^((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$
+```
 
 As of `1.1.2`, JavaScript named patterns are supported, where the group named `version` will be used to populate the tag. For example:
 
@@ -243,9 +255,9 @@ Useful for projects where the version number may be output by a previous action.
 
 Set the minimum version which would be used to create a tag.
 
-The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also be used when introducing Autotag to a repository which has already tagged.
+The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also be used when introducing Autotag to a repository which already has tags.
 
-For example, if the version `0.1.0` would already have been published, set the `minVersion` to the next patch to prevent a duplicate tag for that version.
+For example, if the version `0.1.0` is already published, set the `minVersion` to the next patch to prevent a duplicate tag for that version.
 
 ```yaml
 - uses: butlerlogic/action-autotag@1.0.0
@@ -255,7 +267,8 @@ For example, if the version `0.1.0` would already have been published, set the `
 ```
 
 ### dry_run
-If this value is true, the tag will not be pushed.
+
+If this value is `true`, the tag will not be pushed.
 You can check for duplicate versions when creating a pull request.
 
 ```yaml
@@ -309,4 +322,4 @@ If you use this or find value in it, please consider contributing in one or more
 1. Fix an issue.
 1. Add a feature (post a proposal in an issue first!).
 
-Copyright &copy; 2020 Butler Logic, Corey Butler, and Contributors.
+Copyright &copy; 2020-2023 Butler Logic, Corey Butler, and Contributors.
