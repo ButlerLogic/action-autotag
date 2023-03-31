@@ -3,6 +3,7 @@ name: Create Action
 on:
   push:
     branches:
+      - master
       - ${{ github.ref }}
 
 jobs:
