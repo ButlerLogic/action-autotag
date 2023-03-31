@@ -1,9 +1,9 @@
 import core from '@actions/core'
 import os from 'os'
-import octokit from 'octokit'
+import { Octokit } from 'octokit'
 
 // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
-const github = (new octokit({ auth: process.env.GITHUB_TOKEN || process.env.INPUT_GITHUB_TOKEN })).rest
+const github = (new Octokit({ auth: process.env.GITHUB_TOKEN || process.env.INPUT_GITHUB_TOKEN })).rest
 
 // Get owner and repo from context of payload that triggered the action
 const [ owner, repo ] = process.env.GITHUB_ACTION_REPOSITORY.split('/')
