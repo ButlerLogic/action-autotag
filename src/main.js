@@ -1,4 +1,4 @@
-import * as core from '@actions/core'
+// import * as core from '@actions/core'
 // import * as core from '@actions/core'
 // import os from 'os'
 // import semver from 'semver'
@@ -10,11 +10,12 @@ import * as core from '@actions/core'
 
 async function run () {
   try {
+    console.log('test')
     // Setup.debug()
     // Setup.requireAnyEnv('GITHUB_TOKEN', 'INPUT_GITHUB_TOKEN')
 
     // Configure the default output
-    core.setOutput('tagcreated', 'no')
+    // core.setOutput('tagcreated', 'no')
 
   //   // Identify the tag parsing strategy
   //   // Use manual strategy if a version is supplied in the action config
