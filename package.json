@@ -6,8 +6,7 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "esbuild --bundle ./src/main.js --platform=node --outdir=dist --external:octokit"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/ButlerLogic/action-autotag/issues"
   },
-  "homepage": "https://github.com/ButlerLogic/action-autotag#readme"
+  "homepage": "https://github.com/ButlerLogic/action-autotag#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "octokit": "^2.0.14",
+    "semver": "^7.3.8"
+  }
 }
