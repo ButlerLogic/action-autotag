@@ -30,6 +30,8 @@ jobs:
         npm i
 
     - name: Commit Build Artifacts
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       run: |
         git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
