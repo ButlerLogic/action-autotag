@@ -3,7 +3,7 @@ name: Create Action
 on:
   push:
     branches:
-      - 'none'
+      - '**'
 
 jobs:
   build:
@@ -11,32 +11,34 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Prepare Dependency Cache
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-npm-
+    # - name: Prepare Dependency Cache
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: node_modules
+    #     key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-npm-
     - name: Install Dependencies
       run: npm install
-    - name: Build
-      run: |
-        rm -rf ./dist
-        npm run prepare
-        cp ./src/package.json ./dist/
-        cd ./dist
-        mkdir -p ./node_modules
-        npm i
-        rm ./package.json
-
-    - name: Commit Build Artifacts
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      run: |
-        git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add .
-          git add -f ./dist
-          git commit -m "Build distribution files"
-          git push
+        cache: "none"
+    # - name: Build
+    #   run: |
+    #     rm -rf ./dist
+    #     npm run prepare
+    #     cp ./src/package.json ./dist/
+    #     cd ./dist
+    #     mkdir -p ./node_modules
+    #     npm i
+    #     rm ./package.json
+
+    # - name: Commit Build Artifacts
+    #   env:
+    #     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    #   run: |
+    #     git config --global user.email "actions@github.com"
+    #       git config --global user.name "GitHub Actions"
+    #       git add .
+    #       git add -f ./dist
+    #       git commit -m "Build distribution files"
+    #       git push
