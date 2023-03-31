@@ -1,0 +1,30 @@
+name: Create Tag
+
+on:
+  push:
+    branches:
+      - ${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install Dependencies
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-
+      run: npm install
+    - name: Build
+      uses: npm run prepare
+    - name: Commit Build Artifacts
+      run: |
+        git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "Build distribution files"
+          git push
