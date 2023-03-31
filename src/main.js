@@ -1,4 +1,4 @@
-import * as core from '@actions/core'
+const core = require('@actions/core')
 // import os from 'os'
 // import semver from 'semver'
 // import Setup from './lib/setup.js'
