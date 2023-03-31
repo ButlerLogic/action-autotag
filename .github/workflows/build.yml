@@ -3,7 +3,7 @@ name: Create Action
 on:
   push:
     branches:
-      - '**'
+      - 'none'
 
 jobs:
   build:
