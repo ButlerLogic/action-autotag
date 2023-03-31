@@ -123,7 +123,7 @@ async function run () {
   //   core.setOutput('taguri', tag.uri)
   //   core.setOutput('tagmessage', tag.message)
   //   core.setOutput('tagref', tag.ref)
-  // } catch (error) {
+  } catch (error) {
   //   core.warning(error.message + '\n' + error.stack)
   //   core.setOutput('tagname', '')
   //   core.setOutput('tagsha', '')
@@ -131,7 +131,7 @@ async function run () {
   //   core.setOutput('tagmessage', '')
   //   core.setOutput('tagref', '')
   //   core.setOutput('tagcreated', 'no')
-  // }
+  }
 }
 
 run()
