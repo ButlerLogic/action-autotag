@@ -5,7 +5,8 @@
   "description": "Automatically create a tag whenever the version changes in package.json",
   "main": "lib/main.js",
   "scripts": {
-    "start": "node ./main.js"
+    "start": "node ./main.js",
+    "build": "esbuild --bundle ./src/main.js --platform=node --outdir=dist --external:octokit"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,8 @@
     "@actions/core": "^1.10.0",
     "octokit": "^2.0.14",
     "semver": "^7.3.8"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.14"
   }
 }
