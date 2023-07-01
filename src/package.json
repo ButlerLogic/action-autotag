@@ -22,6 +22,6 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "octokit": "^2.0.14",
-    "semver": "^7.3.8"
+    "semver": "^7.5.2"
   }
 }
