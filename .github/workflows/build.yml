@@ -28,7 +28,6 @@ jobs:
         cd ./dist
         mkdir -p ./node_modules
         npm i
-        npm audit fix
 
     - name: Commit Build Artifacts
       env:
