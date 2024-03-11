@@ -8,3 +8,4 @@ logs
 _*
 node_modules
 !./src/node_modules
+!./dist/node_modules
