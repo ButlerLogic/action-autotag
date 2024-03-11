@@ -7,8 +7,8 @@ graph LR
   e[Detect/Extract<br/>Semantic Version]
   e-->c[Compare<br/>to Existing Tags]
   c-->d{Newer?}
-  d.->|No|Done
-  d.->|Yes|p[Create Tag]
+  d-.->|No|done[Done]
+  d-.->|Yes|p[Create Tag]
 ```
 
 There are several "detection strategies" to choose from:
