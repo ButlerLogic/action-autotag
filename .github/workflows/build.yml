@@ -12,7 +12,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Prepare Dependency Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v3.2.2
       with:
         path: node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
