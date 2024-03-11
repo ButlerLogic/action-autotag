@@ -58,5 +58,5 @@ outputs:
   build:
     description: \"yes\" or \"no\", indicating the tag represents a semantic version build.
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/main.js"
